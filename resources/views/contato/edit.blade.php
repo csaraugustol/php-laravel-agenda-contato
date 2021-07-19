@@ -129,7 +129,7 @@
 
                           @if($t == $primeiroTel )
 
-                        <div class="col-lg-6 col-md-6 col-sm-6 mt-2 input-group form-group tel-remove">
+                        <div class="col-lg-6 col-md-6 col-sm-6 mt-2 input-group form-group remove-dados">
                            <!-- Exibe primeiro input sem a opção de remoção -->
                           
                           <input type="text" class="form-control" placeholder="Telefone" id="" name="telefone[]"  
@@ -137,10 +137,10 @@
 
                           @else
 
-                          <div class="col-lg-6 col-md-6 col-sm-6 mt-2 input-group form-group tel-remove">
+                          <div class="col-lg-6 col-md-6 col-sm-6 mt-2 input-group form-group remove-dados">
                            <!-- Carrega restante array de telefones -->
                            <div class="input-group-prepend">
-                           <button class="btn btn-primary remove" type="button" >-</button>
+                           <button class="btn btn-danger remove" type="button" >-</button>
                                         </div>
                           <input type="text" class="form-control" placeholder="Telefone" id="" name="telefone[]"  
                           value="{{$t->telefone}}" />
@@ -148,11 +148,8 @@
                           @endif
                         </div>
                         @endforeach
-                   
 
                         </div>
-
-                      
 
                     </div>
 
@@ -166,43 +163,46 @@
           
                     <div id="eventoNovoEnd">
                     @foreach($endereco as $e)
-                    <div class="row form-group">
-                        <div class="col-lg-3 col-sm-3 mt-2">
-                          <input type="text" class="form-control" placeholder="CEP" value="{{$e->cep}}" name="cep[]" id="cep" onblur="getDadosEndPorCEP()"/>
-                        </div>
+                          <div class="remove-dados">
 
-                        <div class="col-lg-6 col-sm-6 mt-2">
-                          <input type="text" class="form-control" placeholder="Endereço" value="{{$e->endereco}}" name="endereco[]" id="endereco" />
-                        </div>
+                            <div class="row form-group">
+                              <div class="col-lg-3 col-sm-3 mt-2">
+                                <input type="text" class="form-control" placeholder="CEP" value="{{$e->cep}}" name="cep[]" id="cep" onblur="getDadosEndPorCEP()"/>
+                              </div>
 
-                        <div class="col-lg-3 col-sm-3 mt-2">
-                          <input type="text" class="form-control" placeholder="Bairro" value="{{$e->bairro}}" name="bairro[]" id="bairro" />
-                        </div>
-                      </div>
-                
-                      <div class="row form-group">
+                              <div class="col-lg-6 col-sm-6 mt-2">
+                                <input type="text" class="form-control" placeholder="Endereço" value="{{$e->endereco}}" name="endereco[]" id="endereco" />
+                              </div>
+
+                              <div class="col-lg-3 col-sm-3 mt-2">
+                                <input type="text" class="form-control" placeholder="Bairro" value="{{$e->bairro}}" name="bairro[]" id="bairro" />
+                              </div>
+                            </div>
                       
+                            <div class="row form-group">
+                            
 
-                        <div class="col-lg-4 col-md-4 col-sm-4 mt-2">
-                          <input type="text" class="form-control" placeholder="Cidade" value="{{$e->cidade}}" name="cidade[]" id="cidade" />
-                        </div>
-                  
-                        <div class="col-lg-4 col-md-4 col-sm-4 mt-2">
-                          <input type="text" class="form-control" placeholder="UF" value="{{$e->uf}}" name="uf[]" id="uf" />
-                        </div>
+                              <div class="col-lg-3 col-md-3 col-sm-3 mt-2">
+                                <input type="text" class="form-control" placeholder="Cidade" value="{{$e->cidade}}" name="cidade[]" id="cidade" />
+                              </div>
+                        
+                              <div class="col-lg-3 col-md-3 col-sm-3 mt-2">
+                                <input type="text" class="form-control" placeholder="UF" value="{{$e->uf}}" name="uf[]" id="uf" />
+                              </div>
 
-                        <div class="col-lg-4 col-md-4 col-sm-4 mt-2">
-                          <input type="text" class="form-control" placeholder="Número" value="{{$e->numero}}" name="numero[]" id="numero" />
-                        </div>
-                      </div>
-                      <hr class="bg-secondary">
-                      @endforeach
+                              <div class="col-lg-3 col-md-3 col-sm-3 mt-2">
+                                <input type="text" class="form-control" placeholder="Número" value="{{$e->numero}}" name="numero[]" id="numero" />
+                              </div>
+                              <div class="col-lg-3 col-md-3 col-sm-3 mt-2">
+                              <button class="btn btn-danger remove w-100" type="button" >Remover</button>
+                              </div>
+                            </div>
+                            <hr class="bg-secondary">
+                           
+
+                            </div>
+                            @endforeach
                     </div>
-                  
-                    
-                
-                  
-                    
 
                     <div class="form-group">
                       <button type="submit" id="btnCad" class=" btn btn-primary btn-block" style="cursor: pointer">
@@ -221,52 +221,38 @@
     </div>
   </div>
 
-  
-  <div class="col-md-12 form-group">
-  <div class="row" id="dep">
-    <div class="col-md-10">
-      <input type="text" class="form-control" placeholder="Nome do Dependente" id="dependente[]" name="dependente[]">
-    </div>
-    <div class="col-md-2">
-      <button class="btn btn-primary" type="button" id="adicionar_dependente">ADD</button>
-    </div>
-  </div>
-</div>
 
 <script>
 
 $( "#novoTel" ).click(function() {
-  $( "#eventoNovoTel" ).append( '<div class="col-lg-6 col-md-6 col-sm-6 mt-2 tel-remove"><input type="text" class="form-control" placeholder="Telefone" id="" name="telefone[]"/><button class="btn btn-primary remove" type="button" >-</button></div>');
+  $( "#eventoNovoTel" ).append( '<div class="col-lg-6 col-md-6 col-sm-6 mt-2 remove-dados"><input type="text" class="form-control" placeholder="Telefone" id="" name="telefone[]"/><button class="btn btn-danger remove" type="button" >-</button></div>');
 });
 
 var cont = 1;
 
 $( "#novoEnd" ).click(function() {
   cont++;
-  $( "#eventoNovoEnd" ).append( '<div class="col-lg-6 col-md-6 col-sm-6 mt-2 "><input type="text" class="form-control" placeholder="Telefone" id="telefone" name="telefone[]"/></div>'+ 
+  $( "#eventoNovoEnd" ).append( '<div class="remove-dados"><div class="row form-group"><div class="col-lg-3 col-sm-3 mt-2"><input type="text" class="form-control" placeholder="CEP" value="{{$e->cep}}" name="cep[]" id="cep'+cont+'" onblur="getDadosEndPorCEP2('+cont+')"/></div>'+ 
 
 
                       ' <div class="col-lg-6 col-sm-6 mt-2"><input type="text" class="form-control" placeholder="Endereço" value="" name="endereco[]" id="endereco'+cont+'" /></div> ' +
 
                       '<div class="col-lg-3 col-sm-3 mt-2"><input type="text" class="form-control" placeholder="Bairro" value="" name="bairro[]" id="bairro'+cont+'" /></div></div>' +
                 
-                     ' <div class="row form-group"><div class="col-lg-4 col-md-4 col-sm-4 mt-2"><input type="text" class="form-control" placeholder="Cidade" value="" name="cidade[]" id="cidade'+cont+'" /></div>' +
+                     ' <div class="row form-group"><div class="col-lg-3 col-md-3 col-sm-3 mt-2"><input type="text" class="form-control" placeholder="Cidade" value="" name="cidade[]" id="cidade'+cont+'" /></div>' +
 
-                        '<div class="col-lg-4 col-md-4 col-sm-4 mt-2"><input type="text" class="form-control" placeholder="UF" value="" name="uf[]" id="uf'+cont+'" /></div>' + 
+                        '<div class="col-lg-3 col-md-3 col-sm-3 mt-2"><input type="text" class="form-control" placeholder="UF" value="" name="uf[]" id="uf'+cont+'" /></div>' + 
                   
-                        '<div class="col-lg-4 col-md-4 col-sm-4 mt-2"><input type="text" class="form-control" placeholder="Número" value="" name="numero[]" id="numero'+cont+'" /></div><hr class="bg-secondary"> </div>' );
+                        '<div class="col-lg-3 col-md-3 col-sm-3 mt-2"><input type="text" class="form-control" placeholder="Número" value="" name="numero[]" id="numero'+cont+'" /></div>'+
+                        '<div class="col-lg-3 col-md-3 col-sm-3 mt-2"><button class="btn btn-danger remove w-100" type="button" >Remover</button></div>'+'<hr class="bg-secondary"> </div></div>' );
 });
 
 
-//Remover campo telefone
+//Remover campos de dados
 $(document).on('click', 'button.remove', function() {
-  $(this).closest('div.tel-remove').remove();
+  $(this).closest('div.remove-dados').remove();
 });
 
-//Remover campo endereço
-$(document).on('click', 'button.removeEnd', function() {
-  $(this).closest('div.end-remove').remove();
-});
 
 </script>
 

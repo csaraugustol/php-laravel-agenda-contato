@@ -88,7 +88,9 @@ class ContatoController extends Controller
         ->where('user_id',  $user_id)
         ->count();
        
-        if($request->nome == null || $request->telefone[0] == null){
+        if($request->nome == null || $request->telefone[0] == null || $request->cep[0] == null
+        || $request->endereco[0] == null || $request->bairro[0] == null || $request->uf[0] == null || $request->cidade[0] == null
+        || $request->numero[0] == null){
 
             return back()->withInput()->with('msgErro', 'Preencha todos os campos!');
 
@@ -127,10 +129,8 @@ class ContatoController extends Controller
                 $this->end->save();
             }   
 
-         
-
-        
         return redirect("/contato")->with('msgSuc', 'Cadastrado realizado com sucesso!')->withInput();
+
         }
     }
 
@@ -175,6 +175,16 @@ class ContatoController extends Controller
      */
     public function update(Request $request, int $id)
     {
+        
+        if($request->numero == null)
+        {
+            return back()->withInput()->with('msgErro', 'O endereço deve conter ao menos um registro.');
+        }
+
+        if($request->nome == null || $request->telefone == null)
+        {
+            return back()->withInput()->with('msgErro', 'Você tentou salvar com campos vazios.');
+        }
         
 
         $c = Contato::findOrFail($id);

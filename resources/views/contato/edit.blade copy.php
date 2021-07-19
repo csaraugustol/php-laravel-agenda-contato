@@ -92,14 +92,17 @@
               <div class="card fat">
 
               
-            @if(session('msgErro'))
-            <div class="alert alert-danger text-center">
-             <p>{{session('msgErro')}}</p>
-             </div>
+              @if(session('msgErro'))
+            <div class="alert alert-danger text-center alert-dismissible fade show" role="alert">
+              <p>{{session('msgErro')}}</p>
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
              @endif
 
                 <div class="card-body">
-                  <h3 class="card-title text-center">Novo Contato</h3>
+                  <h3 class="card-title text-center">Ver Contato</h3>
                 
                 <form id="addCampos" action="{{route('contato.update',['contato' => $contato->id])}}" method="POST">
                         @csrf
