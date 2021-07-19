@@ -49,12 +49,17 @@ class ContatoController extends Controller
 
     public function index()
     {
+
+        $contaContatos = DB::table('contatos')
+        ->where("user_id", Auth::user()
+        ->id)
+        ->count();
  
         $contatos = Contato::where("user_id", Auth::user()
         ->id)
         ->orderBy('nome','asc')
         ->get();
-        return view('contato.index', ['contatos' =>  $contatos]);
+        return view('contato.index', ['contatos' =>  $contatos, 'contaContatos' =>  $contaContatos]);
     }
 
     /**
@@ -148,6 +153,9 @@ class ContatoController extends Controller
      */
     public function edit(int $id)
     {
+        //Query pega o primeiro telefone cadastrado
+        $primeiroTel = Telefone::where("contato_id", $id)->first();
+
         $contato = Contato::findOrFail($id);
 
         $tel = Telefone::where("contato_id", $id)->get();
@@ -155,7 +163,7 @@ class ContatoController extends Controller
         $endereco = Endereco::where("contato_id", $id)->get();
 
 
-        return view('contato.edit', ['contato' => $contato, 'tel' => $tel, 'endereco' => $endereco]);
+        return view('contato.edit', ['contato' => $contato, 'tel' => $tel, 'endereco' => $endereco, 'primeiroTel' => $primeiroTel]);
     }
 
     /**

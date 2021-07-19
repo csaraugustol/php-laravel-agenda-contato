@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" />
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script src="http://jqueryvalidation.org/files/dist/jquery.validate.js"></script>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous"/>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
     integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
     crossorigin="anonymous"></script>
@@ -121,35 +121,17 @@
 
                     <div class="row form-group" id="eventoNovoTel">
 
-                    <div class="col-lg-12 col-sm-12 mt-2">
-                        <button class="form-control bg-warning" type="button" id="novoTel">+ Telefone</button>
+                    <div class="col-sm-6 mt-2">
+                        <button class="form-control bg-warning mt-2" type="button" id="novoTel">+ Telefone</button>
                       </div>
 
-                      @foreach($tel as $t)
-
-                          @if($t == $primeiroTel )
-
-                        <div class="col-lg-6 col-md-6 col-sm-6 mt-2 input-group form-group tel-remove">
-                           <!-- Exibe primeiro input sem a opção de remoção -->
-                          
-                          <input type="text" class="form-control" placeholder="Telefone" id="" name="telefone[]"  
-                          value="{{$t->telefone}}" />
-
-                          @else
-
-                          <div class="col-lg-6 col-md-6 col-sm-6 mt-2 input-group form-group tel-remove">
-                           <!-- Carrega restante array de telefones -->
-                           <div class="input-group-prepend">
-                           <button class="btn btn-primary remove" type="button" >-</button>
-                                        </div>
-                          <input type="text" class="form-control" placeholder="Telefone" id="" name="telefone[]"  
-                          value="{{$t->telefone}}" />
-
-                          @endif
-                        </div>
+        
+                      <div class="col-sm-6 mt-2">
+                      <!-- Carrega array de telefones -->
+                       @foreach($tel as $t)
+                        <input type="text" class="form-control mt-2" placeholder="Telefone" id="" name="telefone[]" 
+                        value="{{$t->telefone}}">
                         @endforeach
-                   
-
                         </div>
 
                       
@@ -157,47 +139,46 @@
                     </div>
 
                     <h4 class="text-center">Endereços</h4>
-
-             
-
-                    <div class="col-lg-12 col-sm-12 mt-2">
+                    <div class="col-sm-2 mt-2">
                           <button class="form-control bg-warning " type="button" id="novoEnd">+ Endereço</button>
                         </div>
           
                     <div id="eventoNovoEnd">
                     @foreach($endereco as $e)
-                    <div class="row form-group">
-                        <div class="col-lg-3 col-sm-3 mt-2">
+                      <div class="row form-group">
+                        <div class="col-sm-3 mt-2">
                           <input type="text" class="form-control" placeholder="CEP" value="{{$e->cep}}" name="cep[]" id="cep" onblur="getDadosEndPorCEP()"/>
                         </div>
 
-                        <div class="col-lg-6 col-sm-6 mt-2">
+                        <div class="col-sm-9 mt-2">
                           <input type="text" class="form-control" placeholder="Endereço" value="{{$e->endereco}}" name="endereco[]" id="endereco" />
-                        </div>
-
-                        <div class="col-lg-3 col-sm-3 mt-2">
-                          <input type="text" class="form-control" placeholder="Bairro" value="{{$e->bairro}}" name="bairro[]" id="bairro" />
                         </div>
                       </div>
                 
                       <div class="row form-group">
-                      
+                        <div class="col-sm-3 mt-2">
+                          <input type="text" class="form-control" placeholder="Bairro" value="{{$e->bairro}}" name="bairro[]" id="bairro" />
+                        </div>
 
-                        <div class="col-lg-4 col-md-4 col-sm-4 mt-2">
+                        <div class="col-sm-3 mt-2">
                           <input type="text" class="form-control" placeholder="Cidade" value="{{$e->cidade}}" name="cidade[]" id="cidade" />
                         </div>
                   
-                        <div class="col-lg-4 col-md-4 col-sm-4 mt-2">
-                          <input type="text" class="form-control" placeholder="UF" value="{{$e->uf}}" name="uf[]" id="uf" />
+                        <div class="col-sm-3 mt-2">
+                          <input type="text" class="form-control" placeholder="UF" value="{{$e->uf}}" name="uf[]" id="" />
                         </div>
 
-                        <div class="col-lg-4 col-md-4 col-sm-4 mt-2">
+                        <div class="col-sm-3 mt-2">
                           <input type="text" class="form-control" placeholder="Número" value="{{$e->numero}}" name="numero[]" id="numero" />
                         </div>
+
+                        
                       </div>
                       <hr class="bg-secondary">
+
                       @endforeach
                     </div>
+
                   
                     
                 
@@ -221,52 +202,43 @@
     </div>
   </div>
 
-  
-  <div class="col-md-12 form-group">
-  <div class="row" id="dep">
-    <div class="col-md-10">
-      <input type="text" class="form-control" placeholder="Nome do Dependente" id="dependente[]" name="dependente[]">
-    </div>
-    <div class="col-md-2">
-      <button class="btn btn-primary" type="button" id="adicionar_dependente">ADD</button>
-    </div>
-  </div>
-</div>
-
 <script>
 
 $( "#novoTel" ).click(function() {
-  $( "#eventoNovoTel" ).append( '<div class="col-lg-6 col-md-6 col-sm-6 mt-2 tel-remove"><input type="text" class="form-control" placeholder="Telefone" id="" name="telefone[]"/><button class="btn btn-primary remove" type="button" >-</button></div>');
+  $( "#eventoNovoTel" ).append( '<div class="col-sm-6 mt-2"><input type="text" class="form-control" placeholder="Telefone" id="" name="telefone[]"/></div>' );
 });
 
 var cont = 1;
 
 $( "#novoEnd" ).click(function() {
   cont++;
-  $( "#eventoNovoEnd" ).append( '<div class="col-lg-6 col-md-6 col-sm-6 mt-2 "><input type="text" class="form-control" placeholder="Telefone" id="telefone" name="telefone[]"/></div>'+ 
+  $( "#eventoNovoEnd" ).append( '<div class="row form-group"><div class="col-sm-3 mt-2"><input type="text" class="form-control" placeholder="CEP" value="" name="cep[]" id="cep'+cont+'" onblur="getDadosEndPorCEP2('+cont+')"/></div> ' + 
 
+                       ' <div class="col-sm-2 col- mt-2"><button class="btn btn-primary" type="button" onclick="getDadosEndPorCEP()">Buscar</button></div> ' + 
 
-                      ' <div class="col-lg-6 col-sm-6 mt-2"><input type="text" class="form-control" placeholder="Endereço" value="" name="endereco[]" id="endereco'+cont+'" /></div> ' +
-
-                      '<div class="col-lg-3 col-sm-3 mt-2"><input type="text" class="form-control" placeholder="Bairro" value="" name="bairro[]" id="bairro'+cont+'" /></div></div>' +
+                      '  <div class="col-sm-7 mt-2"><input type="text" class="form-control" placeholder="Endereço" readonly value="" name="endereco[]" id="endereco'+cont+'" /></div></div> ' +
                 
-                     ' <div class="row form-group"><div class="col-lg-4 col-md-4 col-sm-4 mt-2"><input type="text" class="form-control" placeholder="Cidade" value="" name="cidade[]" id="cidade'+cont+'" /></div>' +
+                     ' <div class="row form-group"><div class="col-sm-3 mt-2"><input type="text" class="form-control" placeholder="Bairro" readonly value="" name="bairro[]" id="bairro'+cont+'" /> </div>' +
 
-                        '<div class="col-lg-4 col-md-4 col-sm-4 mt-2"><input type="text" class="form-control" placeholder="UF" value="" name="uf[]" id="uf'+cont+'" /></div>' + 
+                        '<div class="col-sm-3 mt-2"><input type="text" class="form-control" placeholder="Cidade" readonly value="" name="cidade[]" id="cidade'+cont+'" /></div>' + 
                   
-                        '<div class="col-lg-4 col-md-4 col-sm-4 mt-2"><input type="text" class="form-control" placeholder="Número" value="" name="numero[]" id="numero'+cont+'" /></div><hr class="bg-secondary"> </div>' );
+                        '<div class="col-sm-2 mt-2"><input type="text" class="form-control" placeholder="UF" readonly value="" name="uf[]" id="uf'+cont+'" /></div> ' +
+
+                        '<div class="col-sm-2 mt-2"><input type="text" class="form-control" placeholder="Número" value="" name="numero[]" id="numero" /></div>' +' </div><hr class="bg-secondary"> </div>' );
 });
 
 
-//Remover campo telefone
-$(document).on('click', 'button.remove', function() {
-  $(this).closest('div.tel-remove').remove();
-});
 
-//Remover campo endereço
-$(document).on('click', 'button.removeEnd', function() {
-  $(this).closest('div.end-remove').remove();
+
+/* $( "#btnCad" ).click(function() {
+
+  //Recebe dados do formulário
+  var dados = $( "#addCampos" ).serialize();
+
+  $.post( "{{route('contato.store')}}", dados, function( retSucesso ) {
+  
 });
+}); */
 
 </script>
 
