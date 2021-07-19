@@ -75,16 +75,30 @@ class ContatoController extends Controller
      */
     public function store(Request $request)
     {
-        if(empty($request->nome)){
+        $user_id = Auth::user()->id;
+
+        //Query para verificar se existe contato com o nome no banco
+        $verificaNomeNoBanco = DB::table('contatos')
+        ->where('nome', $request->nome)
+        ->where('user_id',  $user_id)
+        ->count();
+       
+        if($request->nome == null || $request->telefone[0] == null){
 
             return back()->withInput()->with('msgErro', 'Preencha todos os campos!');
 
-        }else{
+        }else if($verificaNomeNoBanco > 0){
+
+            return back()->withInput()->with('msgErro', 'Já existe um contato com esse nome!');
+
+        }
+        else{
 
             //Salva dados básicos do contato
             $c = new Contato();
             $c->nome = $request->nome;
             $c->user_id = Auth::user()->id;
+
             $c->save();
 
             //Salva array de telefone
@@ -203,7 +217,7 @@ class ContatoController extends Controller
     {
     
         $Contato->delete();
-        return redirect()->route('contato.index', ['msgSuc' => 'Contato deletado!']);
+        return redirect()->route('contato.index')->with('msgDel', 'Contato deletado!');
 
     }
 }

@@ -110,7 +110,7 @@
                     <div class="row form-group">
                    
                       <div class="col-sm-12 mt-2">
-                        <input type="text" class="form-control" placeholder="Nome" id="" name="nome" />
+                        <input type="text" class="form-control" value="{{ old('nome') }}" placeholder="Nome" id="" name="nome" />
                       </div>
 
                     </div>

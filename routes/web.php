@@ -35,7 +35,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::post('/busca', 'ContatoController@buscaFiltrada')->name('contato.busca');
+Route::post('/busca', 'ContatoController@buscaFiltrada')->name('contato.busca')->middleware('auth');
 
 Route::get('/logout', function(){
 Auth::logout();
