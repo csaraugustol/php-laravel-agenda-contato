@@ -80,17 +80,17 @@
         $("#novoEnd").click(function() {
             cont++;
             $("#eventoNovoEnd").append(
-                '<div class="remove-dados"><div class="row form-group"><div class="col-lg-3 col-sm-3 mt-2"><input type="text" class="form-control" required placeholder="CEP" name="cep[]" id="cep' +
+                '<div class="remove-dados"><div class="row form-group"><div class="col-lg-3 col-sm-3 mt-2"><input type="text" class="form-control" placeholder="CEP" name="cep[]" id="cep' +
                 cont + '" onblur="getDadosEndPorCEP2(' + cont + ')" /></div>' +
-                '<div class="col-lg-6 col-sm-6 mt-2"><input type="text" class="form-control" required placeholder="Endereço"  name="endereco[]" id="endereco' +
+                '<div class="col-lg-6 col-sm-6 mt-2"><input type="text" class="form-control" placeholder="Endereço"  name="endereco[]" id="endereco' +
                 cont + '" /></div>' +
-                '<div class="col-lg-3 col-sm-3 mt-2"><input type="text" class="form-control" required placeholder="Bairro" name="bairro[]" id="bairro' +
+                '<div class="col-lg-3 col-sm-3 mt-2"><input type="text" class="form-control" placeholder="Bairro" name="bairro[]" id="bairro' +
                 cont + '" /></div></div>' +
-                '<div class="row form-group"><div class="col-lg-3 col-md-3 col-sm-3 mt-2"><input type="text" class="form-control" required placeholder="Cidade" name="cidade[]" id="cidade' +
+                '<div class="row form-group"><div class="col-lg-3 col-md-3 col-sm-3 mt-2"><input type="text" class="form-control" placeholder="Cidade" name="cidade[]" id="cidade' +
                 cont + '" /></div>' +
-                '<div class="col-lg-3 col-md-3 col-sm-3 mt-2"><input type="text" class="form-control" required placeholder="UF" name="uf[]" id="uf' +
+                '<div class="col-lg-3 col-md-3 col-sm-3 mt-2"><input type="text" class="form-control" placeholder="UF" name="uf[]" id="uf' +
                 cont + '" /></div>' +
-                '<div class="col-lg-3 col-md-3 col-sm-3 mt-2"> <input type="text" class="form-control" required placeholder="Número" name="numero[]" id="numero' +
+                '<div class="col-lg-3 col-md-3 col-sm-3 mt-2"> <input type="text" class="form-control" placeholder="Número" name="numero[]" id="numero' +
                 cont + '" /></div>' +
                 '<div class="col-lg-3 col-md-3 col-sm-3 mt-2"><button class="btn btn-danger remove w-100" type="button">Remover</button></div></div><hr class="bg-secondary"></div>'
             );

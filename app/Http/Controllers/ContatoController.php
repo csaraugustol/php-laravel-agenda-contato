@@ -92,10 +92,7 @@ class ContatoController extends Controller
             ->count();
 
         if (
-            $request->nome == null || $request->telefone[0] == null || $request->cep[0] == null
-            || $request->endereco[0] == null || $request->bairro[0] == null || $request->uf[0] == null || $request->cidade[0] == null
-            || $request->numero[0] == null
-        ) {
+            $request->nome == null || $request->telefone[0] == null) {
 
             return back()->withInput()->with('msgErro', 'Preencha todos os campos!');
         } else if ($verificaNomeNoBanco > 0) {
@@ -177,12 +174,14 @@ class ContatoController extends Controller
     public function update(Request $request, int $id)
     {
 
-       
+
         $user_id = Auth::user()->id;
 
-    
-        if ($request->cep == null || $request->endereco == null || $request->bairro == null || $request->cidade == null ||
-        $request->numero == null || $request->uf == null) {
+
+        if (
+            $request->cep == null || $request->endereco == null || $request->bairro == null || $request->cidade == null ||
+            $request->numero == null || $request->uf == null
+        ) {
             return back()->withInput()->with('msgErro', 'Não é possível salvar um endereço com campos vazios.');
         }
 

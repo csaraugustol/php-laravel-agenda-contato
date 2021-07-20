@@ -68,17 +68,17 @@
 
                                 <div class="row form-group">
                                     <div class="col-lg-3 col-md-3 col-sm-3 mt-2">
-                                        <input type="text" class="form-control" required placeholder="CEP" value="" name="cep[]"
+                                        <input type="text" class="form-control" placeholder="CEP" value="" name="cep[]"
                                             id="cep" onblur="getDadosEndPorCEP()" />
                                     </div>
 
                                     <div class="col-lg-6 col-md-6 col-sm-6 mt-2">
-                                        <input type="text" class="form-control" required placeholder="Endereço" value=""
+                                        <input type="text" class="form-control" placeholder="Endereço" value=""
                                             name="endereco[]" id="endereco" />
                                     </div>
 
                                     <div class="col-lg-3 col-md-3 col-sm-3 mt-2">
-                                        <input type="text" class="form-control" required placeholder="Bairro" value=""
+                                        <input type="text" class="form-control" placeholder="Bairro" value=""
                                             name="bairro[]" id="bairro" />
                                     </div>
                                 </div>
@@ -87,17 +87,17 @@
 
 
                                     <div class="col-lg-4 col-md-4 col-sm-4 mt-2">
-                                        <input type="text" class="form-control" required placeholder="Cidade" value=""
+                                        <input type="text" class="form-control" placeholder="Cidade" value=""
                                             name="cidade[]" id="cidade" />
                                     </div>
 
                                     <div class="col-lg-4 col-md-4 col-sm-4 mt-2">
-                                        <input type="text" class="form-control" required placeholder="UF" value="" name="uf[]"
+                                        <input type="text" class="form-control" placeholder="UF" value="" name="uf[]"
                                             id="uf" />
                                     </div>
 
                                     <div class="col-lg-4 col-md-4 col-sm-4 mt-2">
-                                        <input type="text" class="form-control" required placeholder="Número" value=""
+                                        <input type="text" class="form-control" placeholder="Número" value=""
                                             name="numero[]" id="numero" />
                                     </div>
 
