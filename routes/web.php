@@ -5,7 +5,6 @@ use App\Http\Controllers\ContatoController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\TelefoneController;
 use App\Http\Controllers\EnderecoController;
-use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -36,8 +35,3 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::post('/busca', 'ContatoController@buscaFiltrada')->name('contato.busca')->middleware('auth');
-
-Route::get('/logout', function(){
-Auth::logout();
-return redirect()->action('LoginController@logout');
-})->name('logout');

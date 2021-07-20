@@ -20,45 +20,48 @@ class ContatoController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function buscaFiltrada(Request $request){
+    public function buscaFiltrada(Request $request)
+    {
 
         $user_id = Auth::user()->id;
         $btnBusca = $request->btnBusca;
 
-        if($btnBusca != null){
 
-                $contatos = DB::table('contatos')
-            ->where('user_id', $user_id)
-            ->where(function($query) use ($btnBusca) {
-               
-                return $query->where('nome', 'like', '%'. $btnBusca . '%');
-            })->orderBy('nome','asc')->get();
+        $contaContatos = DB::table('contatos')
+            ->where("user_id", $user_id)
+            ->count();
 
-        }else{
+        if ($btnBusca != null) {
+
+            $contatos = DB::table('contatos')
+                ->where('user_id', $user_id)
+                ->where(function ($query) use ($btnBusca) {
+
+                    return $query->where('nome', 'like', '%' . $btnBusca . '%');
+                })->orderBy('nome', 'asc')->get();
+        } else {
             //Busca todos por usuário se o campo de busca por vazio
             $contatos = Contato::where("user_id", Auth::user()
-            ->id)
-            ->orderBy('nome','asc')
-            ->get();
-
+                ->id)
+                ->orderBy('nome', 'asc')
+                ->get();
         }
-      
-       return view('contato.index', ['contatos' =>  $contatos]);
 
+        return view('contato.index', ['contatos' =>  $contatos, 'contaContatos' =>  $contaContatos]);
     }
 
     public function index()
     {
 
         $contaContatos = DB::table('contatos')
-        ->where("user_id", Auth::user()
-        ->id)
-        ->count();
- 
+            ->where("user_id", Auth::user()
+                ->id)
+            ->count();
+
         $contatos = Contato::where("user_id", Auth::user()
-        ->id)
-        ->orderBy('nome','asc')
-        ->get();
+            ->id)
+            ->orderBy('nome', 'asc')
+            ->get();
         return view('contato.index', ['contatos' =>  $contatos, 'contaContatos' =>  $contaContatos]);
     }
 
@@ -84,22 +87,21 @@ class ContatoController extends Controller
 
         //Query para verificar se existe contato com o nome no banco
         $verificaNomeNoBanco = DB::table('contatos')
-        ->where('nome', $request->nome)
-        ->where('user_id',  $user_id)
-        ->count();
-       
-        if($request->nome == null || $request->telefone[0] == null || $request->cep[0] == null
-        || $request->endereco[0] == null || $request->bairro[0] == null || $request->uf[0] == null || $request->cidade[0] == null
-        || $request->numero[0] == null){
+            ->where('nome', $request->nome)
+            ->where('user_id',  $user_id)
+            ->count();
+
+        if (
+            $request->nome == null || $request->telefone[0] == null || $request->cep[0] == null
+            || $request->endereco[0] == null || $request->bairro[0] == null || $request->uf[0] == null || $request->cidade[0] == null
+            || $request->numero[0] == null
+        ) {
 
             return back()->withInput()->with('msgErro', 'Preencha todos os campos!');
-
-        }else if($verificaNomeNoBanco > 0){
+        } else if ($verificaNomeNoBanco > 0) {
 
             return back()->withInput()->with('msgErro', 'Já existe um contato com esse nome!');
-
-        }
-        else{
+        } else {
 
             //Salva dados básicos do contato
             $c = new Contato();
@@ -109,15 +111,15 @@ class ContatoController extends Controller
             $c->save();
 
             //Salva array de telefone
-            for ($i = 0; $i < count($request->telefone); $i++) { 
+            for ($i = 0; $i < count($request->telefone); $i++) {
                 $this->tel = new Telefone();
                 $this->tel->telefone = $request->telefone[$i];
                 $this->tel->contato_id = $c->id;
                 $this->tel->save();
-            }   
+            }
 
             //Salva array de endereços
-            for ($i = 0; $i < count($request->cep); $i++) { 
+            for ($i = 0; $i < count($request->cep); $i++) {
                 $this->end = new Endereco();
                 $this->end->cep = $request->cep[$i];
                 $this->end->endereco = $request->endereco[$i];
@@ -127,10 +129,9 @@ class ContatoController extends Controller
                 $this->end->numero = $request->numero[$i];
                 $this->end->contato_id = $c->id;
                 $this->end->save();
-            }   
+            }
 
-        return redirect("/contato")->with('msgSuc', 'Cadastrado realizado com sucesso!')->withInput();
-
+            return redirect("/contato")->with('msgSuc', 'Cadastrado realizado com sucesso!')->withInput();
         }
     }
 
@@ -175,17 +176,20 @@ class ContatoController extends Controller
      */
     public function update(Request $request, int $id)
     {
-        
-        if($request->numero == null)
-        {
-            return back()->withInput()->with('msgErro', 'O endereço deve conter ao menos um registro.');
+
+       
+        $user_id = Auth::user()->id;
+
+    
+        if ($request->cep == null || $request->endereco == null || $request->bairro == null || $request->cidade == null ||
+        $request->numero == null || $request->uf == null) {
+            return back()->withInput()->with('msgErro', 'Não é possível salvar um endereço com campos vazios.');
         }
 
-        if($request->nome == null || $request->telefone == null)
-        {
+        if ($request->nome == null || $request->telefone == null) {
             return back()->withInput()->with('msgErro', 'Você tentou salvar com campos vazios.');
         }
-        
+
 
         $c = Contato::findOrFail($id);
         $c->nome = $request->nome;
@@ -195,19 +199,17 @@ class ContatoController extends Controller
         $c->telefones()->delete();
         $c->enderecos()->delete();
 
-        for ($i = 0; $i < count($request->telefone); $i++) { 
+        for ($i = 0; $i < count($request->telefone); $i++) {
             $this->tel = new Telefone();
             $this->tel->telefone = $request->telefone[$i];
             $this->tel->contato_id = $c->id;
 
-                $this->tel->save();
-       
+            $this->tel->save();
+        }
 
-        }   
 
-        
 
-        for ($i = 0; $i < count($request->cep); $i++) { 
+        for ($i = 0; $i < count($request->cep); $i++) {
             $this->end = new Endereco();
             $this->end->cep = $request->cep[$i];
             $this->end->endereco = $request->endereco[$i];
@@ -216,13 +218,11 @@ class ContatoController extends Controller
             $this->end->uf = $request->uf[$i];
             $this->end->numero = $request->numero[$i];
             $this->end->contato_id = $c->id;
-  
-                $this->end->save();
-          
-        }   
+
+            $this->end->save();
+        }
 
         return redirect("/contato")->with('msgSuc', 'Atualizações realizadas com sucesso!')->withInput();
-
     }
 
     /**
@@ -233,9 +233,8 @@ class ContatoController extends Controller
      */
     public function destroy(Contato $Contato)
     {
-    
+
         $Contato->delete();
         return redirect()->route('contato.index')->with('msgDel', 'Contato deletado!');
-
     }
 }
