@@ -37,7 +37,7 @@
                             <div class="row form-group">
 
                                 <div class="col-sm-12 mt-2">
-                                    <input type="text" class="form-control" placeholder="Nome" id="" name="nome"
+                                    <input type="text" class="form-control" required placeholder="Nome" id="" name="nome"
                                         value="{{ $contato->nome }}" />
                                 </div>
 
@@ -60,7 +60,7 @@
                                         <div class="col-lg-6 col-md-6 col-sm-6 mt-2 input-group form-group">
                                             <!-- Exibe primeiro input sem a opção de remoção -->
 
-                                            <input type="text" class="form-control" placeholder="Telefone" id=""
+                                            <input type="text" class="form-control" required placeholder="Telefone" id=""
                                                 name="telefone[]" value="{{ $t->telefone }}" />
                                         </div>
                                     @else
@@ -71,7 +71,7 @@
                                             <div class="input-group-prepend">
                                                 <button class="btn btn-danger remove" type="button">-</button>
                                             </div>
-                                            <input type="text" class="form-control" placeholder="Telefone" id=""
+                                            <input type="text" class="form-control" required placeholder="Telefone" id=""
                                                 name="telefone[]" value="{{ $t->telefone }}" />
                                         </div>
 
@@ -91,18 +91,18 @@
 
                                         <div class="row form-group">
                                             <div class="col-lg-3 col-sm-3 mt-2">
-                                                <input type="text" class="form-control" placeholder="CEP"
+                                                <input type="text" class="form-control" required placeholder="CEP"
                                                     value="{{ $e->cep }}" name="cep[]" id="cep"
                                                     onblur="getDadosEndPorCEP()" />
                                             </div>
 
                                             <div class="col-lg-6 col-sm-6 mt-2">
-                                                <input type="text" class="form-control" placeholder="Endereço"
+                                                <input type="text" class="form-control" required placeholder="Endereço"
                                                     value="{{ $e->endereco }}" name="endereco[]" id="endereco" />
                                             </div>
 
                                             <div class="col-lg-3 col-sm-3 mt-2">
-                                                <input type="text" class="form-control" placeholder="Bairro"
+                                                <input type="text" class="form-control" required placeholder="Bairro"
                                                     value="{{ $e->bairro }}" name="bairro[]" id="bairro" />
                                             </div>
                                         </div>
@@ -111,17 +111,17 @@
 
 
                                             <div class="col-lg-3 col-md-3 col-sm-3 mt-2">
-                                                <input type="text" class="form-control" placeholder="Cidade"
+                                                <input type="text" class="form-control" required placeholder="Cidade"
                                                     value="{{ $e->cidade }}" name="cidade[]" id="cidade" />
                                             </div>
 
                                             <div class="col-lg-3 col-md-3 col-sm-3 mt-2">
-                                                <input type="text" class="form-control" placeholder="UF"
+                                                <input type="text" class="form-control" required placeholder="UF"
                                                     value="{{ $e->uf }}" name="uf[]" id="uf" />
                                             </div>
 
                                             <div class="col-lg-3 col-md-3 col-sm-3 mt-2">
-                                                <input type="text" class="form-control" placeholder="Número"
+                                                <input type="text" class="form-control" required placeholder="Número"
                                                     value="{{ $e->numero }}" name="numero[]" id="numero" />
                                             </div>
                                             <div class="col-lg-3 col-md-3 col-sm-3 mt-2">

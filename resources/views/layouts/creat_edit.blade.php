@@ -10,7 +10,6 @@
         href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" />
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script src="http://jqueryvalidation.org/files/dist/jquery.validate.js"></script>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
         integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous">
     </script>
@@ -72,7 +71,7 @@
     <script>
         $("#novoTel").click(function() {
             $("#eventoNovoTel").append(
-                '<div class="col-lg-6 col-md-6 col-sm-6 mt-2 input-group form-group remove-dados"><div class="input-group-prepend"><button class="btn btn-danger remove" type="button">-</button></div><input type="text" class="form-control" placeholder="Telefone" id="" name="telefone[]" /></div>'
+                '<div class="col-lg-6 col-md-6 col-sm-6 mt-2 input-group form-group remove-dados"><div class="input-group-prepend"><button class="btn btn-danger remove" type="button">-</button></div><input type="text" class="form-control" required placeholder="Telefone" id="" name="telefone[]" /></div>'
             );
         });
 
@@ -81,17 +80,17 @@
         $("#novoEnd").click(function() {
             cont++;
             $("#eventoNovoEnd").append(
-                '<div class="remove-dados"><div class="row form-group"><div class="col-lg-3 col-sm-3 mt-2"><input type="text" class="form-control" placeholder="CEP" name="cep[]" id="cep' +
+                '<div class="remove-dados"><div class="row form-group"><div class="col-lg-3 col-sm-3 mt-2"><input type="text" class="form-control" required placeholder="CEP" name="cep[]" id="cep' +
                 cont + '" onblur="getDadosEndPorCEP2(' + cont + ')" /></div>' +
-                '<div class="col-lg-6 col-sm-6 mt-2"><input type="text" class="form-control" placeholder="Endereço"  name="endereco[]" id="endereco' +
+                '<div class="col-lg-6 col-sm-6 mt-2"><input type="text" class="form-control" required placeholder="Endereço"  name="endereco[]" id="endereco' +
                 cont + '" /></div>' +
-                '<div class="col-lg-3 col-sm-3 mt-2"><input type="text" class="form-control" placeholder="Bairro" name="bairro[]" id="bairro' +
+                '<div class="col-lg-3 col-sm-3 mt-2"><input type="text" class="form-control" required placeholder="Bairro" name="bairro[]" id="bairro' +
                 cont + '" /></div></div>' +
-                '<div class="row form-group"><div class="col-lg-3 col-md-3 col-sm-3 mt-2"><input type="text" class="form-control" placeholder="Cidade" name="cidade[]" id="cidade' +
+                '<div class="row form-group"><div class="col-lg-3 col-md-3 col-sm-3 mt-2"><input type="text" class="form-control" required placeholder="Cidade" name="cidade[]" id="cidade' +
                 cont + '" /></div>' +
-                '<div class="col-lg-3 col-md-3 col-sm-3 mt-2"><input type="text" class="form-control" placeholder="UF" name="uf[]" id="uf' +
+                '<div class="col-lg-3 col-md-3 col-sm-3 mt-2"><input type="text" class="form-control" required placeholder="UF" name="uf[]" id="uf' +
                 cont + '" /></div>' +
-                '<div class="col-lg-3 col-md-3 col-sm-3 mt-2"> <input type="text" class="form-control" placeholder="Número" name="numero[]" id="numero' +
+                '<div class="col-lg-3 col-md-3 col-sm-3 mt-2"> <input type="text" class="form-control" required placeholder="Número" name="numero[]" id="numero' +
                 cont + '" /></div>' +
                 '<div class="col-lg-3 col-md-3 col-sm-3 mt-2"><button class="btn btn-danger remove w-100" type="button">Remover</button></div></div><hr class="bg-secondary"></div>'
             );
@@ -162,6 +161,7 @@
 
         }
     </script>
+
 
 </body>
 
