@@ -24,17 +24,17 @@ class Contato extends Model
     public function user()
     {
 
-        return $this->belongsTo(User::class);
+        return $this->belongsTo('App\User');
     }
 
     public function enderecos()
     {
-        return $this->hasMany(Endereco::class);
+        return $this->hasMany('App\Endereco');
     }
 
     public function telefones()
     {
-        return $this->hasMany(Telefone::class);
+        return $this->hasMany('App\Telefone');
     }
 
     

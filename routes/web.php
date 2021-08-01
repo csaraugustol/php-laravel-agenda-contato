@@ -35,3 +35,5 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::post('/busca', 'ContatoController@buscaFiltrada')->name('contato.busca')->middleware('auth');
+
+Route::get('pdf', 'PdfController@retornaContPdf')->name('exportacao.pdf')->middleware('auth');

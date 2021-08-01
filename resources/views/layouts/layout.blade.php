@@ -48,6 +48,10 @@
                 </li>
 
                 <li class="nav-item">
+                    <a href="{{ route('exportacao.pdf') }}" target="_blank" class="nav-link text-info">Exportar em PDF</a>
+                </li>
+
+                <li class="nav-item">
                     <form id="logout-form" action="{{ route('logout') }}" method="POST">
                         @csrf
                         <button class="btn btn-outline-info" type="submit">Sair</button>
