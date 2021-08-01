@@ -4,6 +4,7 @@ namespace App\Exports;
 
 use App\Contato;
 use Maatwebsite\Excel\Concerns\FromCollection;
+use Illuminate\Support\Facades\Auth;
 
 class ContatosExport implements FromCollection
 {
@@ -12,6 +13,13 @@ class ContatosExport implements FromCollection
     */
     public function collection()
     {
-        return Contato::all();
+        
+        $c = Contato::with('telefones','enderecos')->where("user_id", Auth::user()->id)
+        ->orderBy('nome', 'asc')
+        ->get();
+           
+    
+
+        return $c;
     }
 }

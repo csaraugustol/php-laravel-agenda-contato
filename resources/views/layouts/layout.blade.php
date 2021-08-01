@@ -52,7 +52,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="{{route('excel')}}" class="nav-link text-info">Exportar em Excel</a>
+                    <a href="{{route('excel')}}" target="_blank" class="nav-link text-info">Exportar em Excel</a>
                 </li>
 
                 <li class="nav-item">
