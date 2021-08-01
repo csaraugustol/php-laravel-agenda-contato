@@ -17,21 +17,12 @@ class PdfController extends Controller
 
         $id =  Auth::user()->id;
 
-        $contatos = Contato::where("user_id", $id)
+        $contatos = Contato::with('telefones','enderecos')->where("user_id", $id)
             ->orderBy('nome', 'asc')
             ->get();
 
 
-        //    dd($contatos);
-
-        $tels = Telefone::where("contato_id",  130)->get();
-
-
-        $enderecos = Endereco::where("contato_id",  130)->get();
-
-
-
-        $pdf = PDF::loadView('exportacao.pdf', ['contatos' => $contatos, 'tels' => $tels, 'enderecos' => $enderecos])->setOptions(['defaultFont' => 'sans-serif']);
+        $pdf = PDF::loadView('exportacao.pdf', ['contatos' => $contatos])->setOptions(['defaultFont' => 'sans-serif']);
 
         return $pdf->stream('contatos.pdf');
     }

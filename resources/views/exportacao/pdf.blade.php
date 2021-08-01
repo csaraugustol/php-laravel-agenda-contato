@@ -24,25 +24,23 @@
 
                 <h1>{{ $c->nome }}</h1>
 
-                <h1>{{ $c->telefones->telefone }}</h1>
-                
-           
+             
 
-             {{--    <h3>Telefones</h3>
-                @foreach ($tels as $t)
+                <h3>Telefones</h3>
+                @foreach ($c->telefones as $t)
 
                     {{ $t->telefone }} <br>
 
                 @endforeach
 
                 <h3>Endereços</h3>
-                @foreach ($enderecos as $e)
+                @foreach ($c->enderecos as $e)
 
                     {{ $e->endereco }}, {{ $e->numero }}, {{ $e->bairro }},
                     {{ $e->cidade }}/{{ $e->uf }} - {{ $e->cep }}<br>
 
                 @endforeach
- --}}
+
             </div>
 
         @empty
