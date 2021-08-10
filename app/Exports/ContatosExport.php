@@ -17,8 +17,6 @@ class ContatosExport implements FromCollection
         ->orderBy('nome', 'asc')
         ->get();
 
-        $arrayCont = 
-        
 
         return $c;
     }

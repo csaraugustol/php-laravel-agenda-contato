@@ -15,7 +15,8 @@ class Contato extends Model
     protected $fillable = [
         'nome',
         'endereco' => 'array',
-        'telefone' => 'array'
+        'telefone' => 'array',
+        'tag' => 'array'
     ];
 
    
@@ -35,6 +36,11 @@ class Contato extends Model
     public function telefones()
     {
         return $this->hasMany('App\Telefone');
+    }
+
+    public function tags()
+    {
+        return $this->hasMany('App\Tag');
     }
 
     

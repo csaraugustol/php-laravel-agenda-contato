@@ -38,6 +38,11 @@
                                         id="" name="nome" />
                                 </div>
 
+                                <div class="col-sm-12 mt-2">
+                                    <input type="text" class="form-control" value="{{ old('tags') }}" required placeholder="Tags"
+                                        id="" name="tags" data-role="tagsinput"/>
+                                </div>
+
                             </div>
 
                             <h4 class="text-center">Telefones</h4>

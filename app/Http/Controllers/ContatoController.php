@@ -11,6 +11,7 @@ use App\Contato;
 use App\User;
 use App\Telefone;
 use App\Endereco;
+use App\Tag;
 use Excel;
 use App\Imports\ContatoImport;
 
@@ -93,6 +94,10 @@ class ContatoController extends Controller
             ->where('user_id',  $user_id)
             ->count();
 
+            $array_tags = explode(',', $request->tags);
+
+       
+
         if (
             $request->nome == null || $request->telefone[0] == null) {
 
@@ -108,6 +113,15 @@ class ContatoController extends Controller
             $c->user_id = Auth::user()->id;
 
             $c->save();
+
+            //Salva array de tags
+            for ($i=0; $i < count($array_tags); $i++) { 
+                $this->t = new Tag();
+                $this->t->tag = $array_tags[$i];
+                $this->t->contato_id = $c->id;
+
+                $this->t->save();
+            }
 
             //Salva array de telefone
             for ($i = 0; $i < count($request->telefone); $i++) {
