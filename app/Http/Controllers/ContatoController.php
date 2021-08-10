@@ -11,6 +11,8 @@ use App\Contato;
 use App\User;
 use App\Telefone;
 use App\Endereco;
+use Excel;
+use App\Imports\ContatoImport;
 
 class ContatoController extends Controller
 {
@@ -235,5 +237,20 @@ class ContatoController extends Controller
 
         $Contato->delete();
         return redirect()->route('contato.index')->with('msgDel', 'Contato deletado!');
+    }
+
+
+    public function importaArqCsv(){
+        return view("importacao");
+    }
+
+    public function importacao(Request $request){
+        Excel::import(new ContatoImport, $request->file);
+
+        if($request == null){
+            return back()->withInput()->with('msgErro', 'Selecione o arquivo a ser enviado.');
+        }else{
+            return redirect()->route('contato.index')->with('msgSuc', 'Importação feita com sucesso.');
+        }
     }
 }

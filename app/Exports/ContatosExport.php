@@ -13,13 +13,27 @@ class ContatosExport implements FromCollection
     */
     public function collection()
     {
-        
         $c = Contato::with('telefones','enderecos')->where("user_id", Auth::user()->id)
         ->orderBy('nome', 'asc')
         ->get();
-           
-    
+
+        $arrayCont = 
+        
 
         return $c;
     }
+
+
+    public static function query()
+    {
+        $c = Contato::with('telefones','enderecos')->where("user_id", Auth::user()->id)
+        ->orderBy('nome', 'asc')
+        ->get();
+        
+
+        return $c;
+    }
+
+  
 }
+

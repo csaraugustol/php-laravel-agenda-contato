@@ -38,4 +38,8 @@ Route::post('/busca', 'ContatoController@buscaFiltrada')->name('contato.busca')-
 
 Route::get('pdf', 'PdfController@retornaContPdf')->name('exportacao.pdf')->middleware('auth');
 
-Route::get('excel', 'ExcelController@export')->name('excel')->middleware('auth');;
+Route::get('excel', 'ExcelController@export')->name('excel')->middleware('auth');
+
+Route::get('/importacao-form', 'ContatoController@importaArqCsv')->middleware('auth');
+
+Route::post('/importacao', 'ContatoController@importaArqCsv')->name('contato.importaArqCsv')->middleware('auth');
