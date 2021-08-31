@@ -13,8 +13,7 @@ class ServiceServiceProvider extends ServiceProvider
      * @var array
      */
     protected $implementationPaths = [
-        'default' => 'App\\Services\\',
-        'vexpay' => 'App\\Services\\VexPay\\',
+        'default' => 'App\\Services\\'
     ];
 
     /**
@@ -24,8 +23,7 @@ class ServiceServiceProvider extends ServiceProvider
      * @var array
      */
     protected $interfacePaths = [
-        'default' => 'App\\Services\\Contracts\\',
-        'vexpay'  => 'App\\Services\\VexPay\\Contracts\\',
+        'default' => 'App\\Services\\Contracts\\'
     ];
 
     /**
@@ -35,8 +33,7 @@ class ServiceServiceProvider extends ServiceProvider
      * @var array
      */
     protected $directoriesPaths = [
-        'default' => 'Services/Contracts',
-        'vexpay'  => 'Services/VexPay/Contracts',
+        'default' => 'Services/Contracts'
     ];
 
     /**

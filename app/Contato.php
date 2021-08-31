@@ -13,18 +13,12 @@ class Contato extends Model
 {
 
     protected $fillable = [
-        'nome',
-        'endereco' => 'array',
-        'telefone' => 'array',
-        'tag' => 'array'
+        'user_id',
+        'nome'
     ];
-
-   
-    
 
     public function user()
     {
-
         return $this->belongsTo('App\User');
     }
 

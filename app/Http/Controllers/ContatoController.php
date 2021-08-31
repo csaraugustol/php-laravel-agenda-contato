@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Query\Builder;
-use  Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Collection;
 use App\Contato;
 use App\User;
 use App\Telefone;
@@ -14,9 +14,20 @@ use App\Endereco;
 use App\Tag;
 use Excel;
 use App\Imports\ContatoImport;
+use App\Services\Contracts\ContatoServiceInterface;
 
 class ContatoController extends Controller
 {
+     /**
+     * @var ContatoServiceInterface
+     */
+    protected $contatoService;
+
+    public function __construct(ContatoServiceInterface $contatoService)
+    {
+        $this->contatoService = $contatoService;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -258,7 +269,7 @@ class ContatoController extends Controller
         return view("importacao");
     }
 
-    public function importacao(Request $request){
+    /*public function importacao(Request $request){
         Excel::import(new ContatoImport, $request->file);
 
         if($request == null){
@@ -266,34 +277,5 @@ class ContatoController extends Controller
         }else{
             return redirect()->route('contato.index')->with('msgSuc', 'Importação feita com sucesso.');
         }
-    }
-
-    public function find(string $idUser): ServiceResponse
-    {
-        try {
-            $user = $this->userRepository->findOrNull($idUser);
-
-            if (is_null($user)) {
-                return new ServiceResponse(
-                    true,
-                    __('services/user.user_not_found'),
-                    null,
-                    [
-                        new InternalError(
-                            __('services/user.user_not_found'),
-                            146001001
-                        )
-                    ]
-                );
-            }
-        } catch (Throwable $th) {
-            return $this->defaultErrorReturn($th, compact('idUser'));
-        }
-
-        return new ServiceResponse(
-            true,
-            __('services/user.user_found_successfully'),
-            $user
-        );
-    }
+    }*/
 }
