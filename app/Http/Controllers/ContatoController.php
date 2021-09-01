@@ -11,6 +11,7 @@ use App\Endereco;
 use App\Telefone;
 use Illuminate\Http\Request;
 use App\Imports\ContatoImport;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -18,7 +19,7 @@ use App\Services\Contracts\ContatoServiceInterface;
 
 class ContatoController extends Controller
 {
-     /**
+    /**
      * @var ContatoServiceInterface
      */
     protected $contatoService;
@@ -75,8 +76,12 @@ class ContatoController extends Controller
     public function store(Request $request)
     {
 
-        $verificaNomeNoBanco = $this->contatoService->searchEqualsName(Auth::user()->id, $request->nome);
-
+       // $verificaNomeNoBanco = $this->contatoService->searchEqualsName(Auth::user()->id, $request->nome);
+        //Query para verificar se existe contato com o nome no banco
+        $verificaNomeNoBanco = DB::table('contatos')
+        ->where('nome', $request->nome)
+        ->where('user_id',  $user_id)
+        ->count();
         $array_tags = explode(',', $request->tags);
 
         if (
@@ -84,7 +89,7 @@ class ContatoController extends Controller
         ) {
 
             return back()->withInput()->with('msgErro', 'Preencha todos os campos!');
-        } else if ($verificaNomeNoBanco==true) {
+        } else if ($verificaNomeNoBanco!=0) {
 
             return back()->withInput()->with('msgErro', 'Já existe um contato com esse nome!');
         } else {
