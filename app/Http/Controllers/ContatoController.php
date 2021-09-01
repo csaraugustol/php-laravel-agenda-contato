@@ -2,70 +2,47 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\DB;
+use Excel;
+use App\Tag;
+use App\User;
+use App\Contato;
+use App\Endereco;
+use App\Telefone;
 use Illuminate\Http\Request;
+use App\Imports\ContatoImport;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Query\Builder;
-use  Illuminate\Database\Eloquent\Collection;
-use App\Contato;
-use App\User;
-use App\Telefone;
-use App\Endereco;
-use App\Tag;
-use Excel;
-use App\Imports\ContatoImport;
+use Illuminate\Database\Eloquent\Collection;
+use App\Services\Contracts\ContatoServiceInterface;
 
 class ContatoController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
+     * @var ContatoServiceInterface
+     */
+    protected $contatoService;
+
+    public function __construct(ContatoServiceInterface $contatoService)
+    {
+        $this->contatoService = $contatoService;
+    }
+
+    /**
+     * Busca todos os contatos do usuário logado.
+     * Realiza filtragem para o usuário.
+     * 
      * @return \Illuminate\Http\Response
      */
 
-    public function buscaFiltrada(Request $request)
+    public function index(Request $request)
     {
+        $getContatoService = $this->contatoService->filterSearch(Auth::user()->id, $request->btnBusca);
 
-        $user_id = Auth::user()->id;
-        $btnBusca = $request->btnBusca;
+        $contacts = $getContatoService->data;
 
+        $countContacts = count($contacts);
 
-        $contaContatos = DB::table('contatos')
-            ->where("user_id", $user_id)
-            ->count();
-
-        if ($btnBusca != null) {
-
-            $contatos = DB::table('contatos')
-                ->where('user_id', $user_id)
-                ->where(function ($query) use ($btnBusca) {
-
-                    return $query->where('nome', 'like', '%' . $btnBusca . '%');
-                })->orderBy('nome', 'asc')->get();
-        } else {
-            //Busca todos por usuário se o campo de busca por vazio
-            $contatos = Contato::where("user_id", Auth::user()
-                ->id)
-                ->orderBy('nome', 'asc')
-                ->get();
-        }
-
-        return view('contato.index', ['contatos' =>  $contatos, 'contaContatos' =>  $contaContatos]);
-    }
-
-    public function index()
-    {
-
-        $contaContatos = DB::table('contatos')
-            ->where("user_id", Auth::user()
-                ->id)
-            ->count();
-
-        $contatos = Contato::where("user_id", Auth::user()
-            ->id)
-            ->orderBy('nome', 'asc')
-            ->get();
-        return view('contato.index', ['contatos' =>  $contatos, 'contaContatos' =>  $contaContatos]);
+        return view('contato.index', ['contatos' =>  $contacts, 'contaContatos' =>  $countContacts]);
     }
 
     /**
@@ -86,23 +63,17 @@ class ContatoController extends Controller
      */
     public function store(Request $request)
     {
-        $user_id = Auth::user()->id;
 
-        //Query para verificar se existe contato com o nome no banco
-        $verificaNomeNoBanco = DB::table('contatos')
-            ->where('nome', $request->nome)
-            ->where('user_id',  $user_id)
-            ->count();
+        $verificaNomeNoBanco = $this->contatoService->searchEqualsName(Auth::user()->id, $request->nome);
 
-            $array_tags = explode(',', $request->tags);
-
-       
+        $array_tags = explode(',', $request->tags);
 
         if (
-            $request->nome == null || $request->telefone[0] == null) {
+            $request->nome == null || $request->telefone[0] == null || $request->tags[0] == null
+        ) {
 
             return back()->withInput()->with('msgErro', 'Preencha todos os campos!');
-        } else if ($verificaNomeNoBanco > 0) {
+        } else if ($verificaNomeNoBanco==true) {
 
             return back()->withInput()->with('msgErro', 'Já existe um contato com esse nome!');
         } else {
@@ -115,7 +86,7 @@ class ContatoController extends Controller
             $c->save();
 
             //Salva array de tags
-            for ($i=0; $i < count($array_tags); $i++) { 
+            for ($i = 0; $i < count($array_tags); $i++) {
                 $this->t = new Tag();
                 $this->t->tag = $array_tags[$i];
                 $this->t->contato_id = $c->id;
@@ -248,17 +219,17 @@ class ContatoController extends Controller
      */
     public function destroy(Contato $Contato)
     {
-
         $Contato->delete();
         return redirect()->route('contato.index')->with('msgDel', 'Contato deletado!');
     }
 
 
-    public function importaArqCsv(){
+    public function importaArqCsv()
+    {
         return view("importacao");
     }
 
-    public function importacao(Request $request){
+    /*public function importacao(Request $request){
         Excel::import(new ContatoImport, $request->file);
 
         if($request == null){
@@ -266,34 +237,5 @@ class ContatoController extends Controller
         }else{
             return redirect()->route('contato.index')->with('msgSuc', 'Importação feita com sucesso.');
         }
-    }
-
-    public function find(string $idUser): ServiceResponse
-    {
-        try {
-            $user = $this->userRepository->findOrNull($idUser);
-
-            if (is_null($user)) {
-                return new ServiceResponse(
-                    true,
-                    __('services/user.user_not_found'),
-                    null,
-                    [
-                        new InternalError(
-                            __('services/user.user_not_found'),
-                            146001001
-                        )
-                    ]
-                );
-            }
-        } catch (Throwable $th) {
-            return $this->defaultErrorReturn($th, compact('idUser'));
-        }
-
-        return new ServiceResponse(
-            true,
-            __('services/user.user_found_successfully'),
-            $user
-        );
-    }
+    }*/
 }

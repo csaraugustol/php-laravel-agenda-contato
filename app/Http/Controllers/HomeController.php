@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Contato;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Contato;
 
 class HomeController extends Controller
 {
@@ -19,7 +19,7 @@ class HomeController extends Controller
     }
 
     /**
-     * Show the application dashboard.
+     * Exibe todos os contatos do usuário logado.
      *
      * @return \Illuminate\Http\Response
      */
@@ -30,38 +30,5 @@ class HomeController extends Controller
         ->orderBy('nome', 'asc')
         ->get();
         return view('contato.index', ['contatos' =>  $contatos]);
-
-
-    }
-
-    public function find(string $idUser): ServiceResponse
-    {
-        try {
-            $user = $this->userRepository->findOrNull($idUser);
-
-            if (is_null($user)) {
-                return new ServiceResponse(
-                    true,
-                    __('services/user.user_not_found'),
-                    null,
-                    [
-                        new InternalError(
-                            __('services/user.user_not_found'),
-                            146001001
-                        )
-                    ]
-                );
-            }
-        } catch (Throwable $th) {
-            return $this->defaultErrorReturn($th, compact('idUser'));
-        }
-
-        return new ServiceResponse(
-            true,
-            __('services/user.user_found_successfully'),
-            $user
-        );
-    }
-
-    
+    }   
 }

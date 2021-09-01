@@ -3,18 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Services\Contracts\TelefoneServiceInterface;
+use App\Services\Contracts\TagServiceInterface;
 
-class TelefoneController extends Controller
+class TagController extends Controller
 {
-      /**
-     * @var TelefoneServiceInterface
+     /**
+     * @var TagServiceInterface
      */
-    protected $telefoneService;
+    protected $tagService;
 
-    public function __construct(TelefoneServiceInterface $telefoneService)
+    public function __construct(TagServiceInterface $tagService)
     {
-        $this->telefoneService = $telefoneService;
+        $this->tagService = $tagService;
     }
 
     /**

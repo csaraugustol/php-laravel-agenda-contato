@@ -9,8 +9,7 @@ use Prettus\Repository\Contracts\RepositoryInterface;
  * Interface BaseRepositoryInterface
  * @package namespace App\Repositories\Contracts;
  */
-interface BaseRepositoryInterface extends RepositoryInterface
+interface TelefoneRepository extends RepositoryInterface
 {
-    public function findOrNull($id, $columns = ['*']);
-    public function delete($id);
+    
 }

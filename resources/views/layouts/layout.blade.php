@@ -64,7 +64,7 @@
 
             </ul>
 
-            <form action="{{ route('contato.busca') }}" method="POST" class="form form-inline">
+            <form action="{{ route('contato.index') }}" method="GET" class="form form-inline">
                 @csrf
                 <input class="form-control mr-sm-2" type="search" placeholder="Pesquisar" name="btnBusca"
                     aria-label="Pesquisar">
