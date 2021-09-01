@@ -64,13 +64,13 @@ class ContatoController extends Controller
      */
     public function store(Request $request)
     {
-         $verificaNomeNoBanco = $this->contatoService->searchEqualsName(Auth::user()->id, $request->nome);
+        // $verificaNomeNoBanco = $this->contatoService->searchEqualsName(Auth::user()->id, $request->nome);
         
         //Query para verificar se existe contato com o nome no banco
-       /* $verificaNomeNoBanco = DB::table('contatos')
+       $verificaNomeNoBanco = DB::table('contatos')
             ->where('nome', $request->nome)
             ->where('user_id',  Auth::user()->id)
-            ->count();*/
+            ->count();
 
         $array_tags = explode(',', $request->tags);
 
