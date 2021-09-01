@@ -2,29 +2,18 @@
 
 namespace App\Http\Controllers;
 
-<<<<<<< HEAD
+
 use Excel;
 use App\Tag;
-=======
-use Illuminate\Support\Facades\DB;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Database\Query\Builder;
-use Illuminate\Database\Eloquent\Collection;
-use App\Contato;
->>>>>>> 63bc248cb90b710b92e02387bd4210697adf6735
 use App\User;
 use App\Contato;
 use App\Endereco;
 use App\Telefone;
 use Illuminate\Http\Request;
 use App\Imports\ContatoImport;
-<<<<<<< HEAD
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Collection;
-=======
->>>>>>> 63bc248cb90b710b92e02387bd4210697adf6735
 use App\Services\Contracts\ContatoServiceInterface;
 
 class ContatoController extends Controller

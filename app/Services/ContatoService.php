@@ -5,15 +5,8 @@ namespace App\Services;
 use Throwable;
 use App\Services\Responses\InternalError;
 use App\Services\Responses\ServiceResponse;
-<<<<<<< HEAD
-use Illuminate\Database\Eloquent\Collection;
 use App\Repositories\Contracts\ContatoRepository;
 use App\Services\Contracts\ContatoServiceInterface;
-use PhpOffice\PhpSpreadsheet\Calculation\Web\Service;
-=======
-use App\Repositories\Contracts\ContatoRepository;
-use App\Services\Contracts\ContatoServiceInterface;
->>>>>>> 63bc248cb90b710b92e02387bd4210697adf6735
 
 class ContatoService extends BaseService implements ContatoServiceInterface
 {
@@ -66,7 +59,6 @@ class ContatoService extends BaseService implements ContatoServiceInterface
         );
     }
 
-<<<<<<< HEAD
     /**
      * Obter busca filtrada de contato
      *
@@ -114,7 +106,4 @@ class ContatoService extends BaseService implements ContatoServiceInterface
             $search
         );
     }
-=======
-
->>>>>>> 63bc248cb90b710b92e02387bd4210697adf6735
 }
