@@ -3,9 +3,13 @@
 namespace App\Repositories;
 
 use App\Contato;
+<<<<<<< HEAD
 use Illuminate\Database\Eloquent\Collection;
 use App\Repositories\Contracts\ContatoRepository;
 use phpDocumentor\Reflection\Types\Integer;
+=======
+use App\Repositories\Contracts\ContatoRepository;
+>>>>>>> 63bc248cb90b710b92e02387bd4210697adf6735
 
 /**
  * Class BaseRepositoryEloquent
@@ -22,6 +26,7 @@ class ContatoRepositoryEloquent extends BaseRepositoryEloquent implements Contat
     {
         return Contato::class;
     }
+<<<<<<< HEAD
 
     /**
      * Obter busca filtrada de contato
@@ -65,4 +70,6 @@ class ContatoRepositoryEloquent extends BaseRepositoryEloquent implements Contat
 
         return $names;
     }
+=======
+>>>>>>> 63bc248cb90b710b92e02387bd4210697adf6735
 }
