@@ -5,8 +5,10 @@ namespace App\Services;
 use Throwable;
 use App\Services\Responses\InternalError;
 use App\Services\Responses\ServiceResponse;
+use Illuminate\Database\Eloquent\Collection;
 use App\Repositories\Contracts\ContatoRepository;
 use App\Services\Contracts\ContatoServiceInterface;
+use PhpOffice\PhpSpreadsheet\Calculation\Web\Service;
 
 class ContatoService extends BaseService implements ContatoServiceInterface
 {
@@ -97,12 +99,12 @@ class ContatoService extends BaseService implements ContatoServiceInterface
         try {
             $search = $this->contatoRepository->searchEqualsName($idUser,  $name);
         } catch (Throwable $th) {
-            return $this->defaultErrorReturn('Erro ao buscar nome.');
+            return $this->defaultErrorReturn('Erro ao buscar .');
         }
 
         return new ServiceResponse(
             true,
-            'Busca realizada com sucesso.',
+            'Filtragem realizada com sucesso.',
             $search
         );
     }

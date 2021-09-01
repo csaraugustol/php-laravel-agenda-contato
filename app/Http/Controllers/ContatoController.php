@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-
 use Excel;
 use App\Tag;
 use App\User;
@@ -19,16 +18,6 @@ use App\Services\Contracts\ContatoServiceInterface;
 
 class ContatoController extends Controller
 {
-    /**
-     * @var ContatoServiceInterface
-     */
-    protected $contatoService;
-
-    public function __construct(ContatoServiceInterface $contatoService)
-    {
-        $this->contatoService = $contatoService;
-    }
-
     /**
      * @var ContatoServiceInterface
      */
@@ -75,13 +64,14 @@ class ContatoController extends Controller
      */
     public function store(Request $request)
     {
-
-       // $verificaNomeNoBanco = $this->contatoService->searchEqualsName(Auth::user()->id, $request->nome);
+         $verificaNomeNoBanco = $this->contatoService->searchEqualsName(Auth::user()->id, $request->nome);
+        
         //Query para verificar se existe contato com o nome no banco
-        $verificaNomeNoBanco = DB::table('contatos')
-        ->where('nome', $request->nome)
-        ->where('user_id',  $user_id)
-        ->count();
+       /* $verificaNomeNoBanco = DB::table('contatos')
+            ->where('nome', $request->nome)
+            ->where('user_id',  Auth::user()->id)
+            ->count();*/
+
         $array_tags = explode(',', $request->tags);
 
         if (
@@ -89,7 +79,7 @@ class ContatoController extends Controller
         ) {
 
             return back()->withInput()->with('msgErro', 'Preencha todos os campos!');
-        } else if ($verificaNomeNoBanco!=0) {
+        } else if ($verificaNomeNoBanco > 0) {
 
             return back()->withInput()->with('msgErro', 'Já existe um contato com esse nome!');
         } else {
@@ -162,7 +152,6 @@ class ContatoController extends Controller
         $tel = Telefone::where("contato_id", $id)->get();
 
         $endereco = Endereco::where("contato_id", $id)->get();
-
 
         return view('contato.edit', ['contato' => $contato, 'tel' => $tel, 'endereco' => $endereco, 'primeiroTel' => $primeiroTel]);
     }

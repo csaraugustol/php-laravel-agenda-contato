@@ -3,7 +3,6 @@
 namespace App\Repositories;
 
 use App\Contato;
-
 use Illuminate\Database\Eloquent\Collection;
 use App\Repositories\Contracts\ContatoRepository;
 use phpDocumentor\Reflection\Types\Integer;
@@ -46,6 +45,7 @@ class ContatoRepositoryEloquent extends BaseRepositoryEloquent implements Contat
 
         return $contacts;
     }
+
 
     /**
      * Verificar se já existe nome cadastrado
