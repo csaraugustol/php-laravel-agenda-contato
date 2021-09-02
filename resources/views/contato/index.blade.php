@@ -1,27 +1,19 @@
 @extends('layouts.layout')
 @section('content')
-
-
     <div>
         <h2 class="text-center text-light display-4">Minha Agenda de Contatos</h2>
     </div>
-
     <div class="d-flex justify-content-center mt-2">
         <table class="table table-light table-striped w-50 table-hover">
             <thead>
                 <tr class='text-center'>
-
                     <th colspan="2" class='text-center text-uppercase'>
-                        @if ($contaContatos > 1)
-                            Você possui {{ $contaContatos }} contatos em sua agenda.
-                        @elseif($contaContatos == 1)
-                            Você possui {{ $contaContatos }} contato em sua agenda.
-                        @else
-
+                        @if (count($contacts) > 1)
+                            Você possui {{ count($contacts) }} contatos em sua agenda.
+                        @elseif(count($contacts) === 1)
+                            Você possui {{ count($contacts) }} contato em sua agenda.
                         @endif
                     </th>
-
-
                 </tr>
                 <tr class='text-center'>
                     <th scope="col">Nome</th>
@@ -29,7 +21,7 @@
                 </tr>
             </thead>
             <tbody>
-                @forelse($contatos as $c)
+                @forelse($contacts as $c)
                     <tr class='text-center'>
                         <td scope="col" class="col-md-4 col-sm-2 align-middle">{{ $c->nome }}</td>
                         <td scope="col">
@@ -59,9 +51,4 @@
             </tbody>
         </table>
     </div>
-
-
-
-    </div>
-
 @endsection

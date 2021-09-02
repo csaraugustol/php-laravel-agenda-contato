@@ -31,19 +31,21 @@ class ContatoController extends Controller
     /**
      * Busca todos os contatos do usuário logado.
      * Realiza filtragem para o usuário.
-     * 
-     * @return \Illuminate\Http\Response
+     *
+     * @return View
      */
 
     public function index(Request $request)
     {
-        $getContatoService = $this->contatoService->filterSearch(Auth::user()->id, $request->btnBusca);
+        $findContactsResponse = $this->contatoService->filterSearch(Auth::user()->id, $request->btnBusca);
 
-        $contacts = $getContatoService->data;
+        if (!$findContactsResponse->success) {
+            return back()->with('msgErro', $findContactsResponse->message);
+        }
 
-        $countContacts = count($contacts);
+        $contacts = $findContactsResponse->data;
 
-        return view('contato.index', ['contatos' =>  $contacts, 'contaContatos' =>  $countContacts]);
+        return view('contato.index', compact('contacts'));
     }
 
     /**
@@ -65,7 +67,7 @@ class ContatoController extends Controller
     public function store(Request $request)
     {
         // $verificaNomeNoBanco = $this->contatoService->searchEqualsName(Auth::user()->id, $request->nome);
-        
+
         //Query para verificar se existe contato com o nome no banco
        $verificaNomeNoBanco = DB::table('contatos')
             ->where('nome', $request->nome)

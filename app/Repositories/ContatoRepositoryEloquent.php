@@ -5,7 +5,6 @@ namespace App\Repositories;
 use App\Contato;
 use Illuminate\Database\Eloquent\Collection;
 use App\Repositories\Contracts\ContatoRepository;
-use phpDocumentor\Reflection\Types\Integer;
 
 /**
  * Class BaseRepositoryEloquent
@@ -34,14 +33,15 @@ class ContatoRepositoryEloquent extends BaseRepositoryEloquent implements Contat
      */
     public function filterSearch(int $idUser, string $filter = null): Collection
     {
-        $contacts = $this->where('user_id', $idUser)
+        $contacts = $this
+            ->where('user_id', $idUser)
             ->where(function ($query) use ($filter) {
                 if (!is_null($filter)) {
                     return $query->where('nome', 'like', '%' . $filter . '%');
                 }
-                return;
             })
-            ->orderBy('nome', 'asc')->get();
+            ->orderBy('nome', 'asc')
+            ->get();
 
         return $contacts;
     }
