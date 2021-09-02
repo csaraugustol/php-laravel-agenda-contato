@@ -5,10 +5,8 @@ namespace App\Services;
 use Throwable;
 use App\Services\Responses\InternalError;
 use App\Services\Responses\ServiceResponse;
-use Illuminate\Database\Eloquent\Collection;
 use App\Repositories\Contracts\ContatoRepository;
 use App\Services\Contracts\ContatoServiceInterface;
-use PhpOffice\PhpSpreadsheet\Calculation\Web\Service;
 
 class ContatoService extends BaseService implements ContatoServiceInterface
 {
@@ -64,16 +62,16 @@ class ContatoService extends BaseService implements ContatoServiceInterface
     /**
      * Obter busca filtrada de contato
      *
-     * @param integer $idUser
-     *
-     * @param string $filter
+     * @param integer     $idUser
+     * @param string|null $filter
      *
      * @return ServiceResponse
      */
     public function filterSearch(int $idUser, string $filter = null): ServiceResponse
     {
         try {
-            $search = $this->contatoRepository->filterSearch($idUser,  $filter);
+            // A variável tem que indicar o que ela realmente é
+            $contacts = $this->contatoRepository->filterSearch($idUser, $filter);
         } catch (Throwable $th) {
             return $this->defaultErrorReturn('Erro ao buscar filtragem.');
         }
@@ -81,7 +79,7 @@ class ContatoService extends BaseService implements ContatoServiceInterface
         return new ServiceResponse(
             true,
             'Filtragem realizada com sucesso.',
-            $search
+            $contacts
         );
     }
 
