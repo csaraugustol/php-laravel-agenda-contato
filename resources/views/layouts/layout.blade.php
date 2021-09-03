@@ -56,7 +56,23 @@
             </form>
         </div>
     </nav>
-    @if (session('msgSuc') || session('msgErro') || session('msgDel'))
+     @if (session('msgDel'))
+        <div class="alert alert-warning text-center alert-dismissible fade show" role="alert">
+            <p>{{ session('msgSuc') }}</p>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif
+    @if (session('msgErro'))
+        <div class="alert alert-danger text-center alert-dismissible fade show" role="alert">
+            <p>{{ session('msgSuc') }}</p>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif
+    @if (session('msgSuc'))
         <div class="alert alert-success text-center alert-dismissible fade show" role="alert">
             <p>{{ session('msgSuc') }}</p>
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">

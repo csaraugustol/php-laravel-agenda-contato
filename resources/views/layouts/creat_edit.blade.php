@@ -440,7 +440,23 @@
 </head>
 
 <body class="bg-info " id="barra-rolagem">
-    @if (session('msgSuc') || session('msgErro') || session('msgDel'))
+    @if (session('msgDel'))
+        <div class="alert alert-warning text-center alert-dismissible fade show" role="alert">
+            <p>{{ session('msgSuc') }}</p>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif
+    @if (session('msgErro'))
+        <div class="alert alert-danger text-center alert-dismissible fade show" role="alert">
+            <p>{{ session('msgSuc') }}</p>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif
+    @if (session('msgSuc'))
         <div class="alert alert-success text-center alert-dismissible fade show" role="alert">
             <p>{{ session('msgSuc') }}</p>
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -448,7 +464,9 @@
             </button>
         </div>
     @endif
+
     @yield('content')
+
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
     </script>
