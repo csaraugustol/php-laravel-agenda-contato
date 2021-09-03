@@ -155,7 +155,7 @@ class ContatoController extends Controller
 
         $endereco = Endereco::where("contato_id", $id)->get();
 
-        return view('contato.edit', ['contato' => $contato, 'tel' => $tel, 'endereco' => $endereco, 'primeiroTel' => $primeiroTel]);
+       return view('contato.edit', ['contato' => $contato, 'tel' => $tel, 'endereco' => $endereco, 'primeiroTel' => $primeiroTel]);
     }
 
     /**
@@ -229,7 +229,6 @@ class ContatoController extends Controller
         $Contato->delete();
         return redirect()->route('contato.index')->with('msgDel', 'Contato deletado!');
     }
-
 
     public function importaArqCsv()
     {
