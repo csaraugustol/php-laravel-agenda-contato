@@ -58,7 +58,7 @@
     </nav>
      @if (session('msgDel'))
         <div class="alert alert-warning text-center alert-dismissible fade show" role="alert">
-            <p>{{ session('msgSuc') }}</p>
+            <p>{{ session('msgDel') }}</p>
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
@@ -66,7 +66,7 @@
     @endif
     @if (session('msgErro'))
         <div class="alert alert-danger text-center alert-dismissible fade show" role="alert">
-            <p>{{ session('msgSuc') }}</p>
+            <p>{{ session('msgErro') }}</p>
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
