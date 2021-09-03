@@ -1,5 +1,7 @@
 @extends('layouts.layout')
+
 @section('content')
+
     <div>
         <h2 class="text-center text-light display-4">Minha Agenda de Contatos</h2>
     </div>
@@ -25,13 +27,11 @@
                     <tr class='text-center'>
                         <td scope="col" class="col-md-4 col-sm-2 align-middle">{{ $c->nome }}</td>
                         <td scope="col">
-
                             <div class="row form-group">
                                 <div class="col-lg-6 col-md-6 col-sm-4">
                                     <a href="{{ route('contato.edit', ['contato' => $c->id]) }}"
                                         class="btn btn-primary  mr-sm-3 mr-md-2" style="width: 100px">Detalhes</a>
                                 </div>
-
                                 <div class="col-lg-6 col-md-6 col-sm-4 ">
                                     <form action="{{ route('contato.destroy', ['contato' => $c->id]) }}" method="post">
                                         @csrf
