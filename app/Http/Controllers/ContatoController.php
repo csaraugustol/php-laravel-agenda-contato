@@ -10,11 +10,14 @@ use App\Endereco;
 use App\Telefone;
 use Illuminate\Http\Request;
 use App\Imports\ContatoImport;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use App\Http\Requests\Contacts\StoreRequest;
 use App\Services\Contracts\ContatoServiceInterface;
+use App\Services\Params\Contacts\CreateContactsServiceParams;
 
 class ContatoController extends Controller
 {
@@ -58,32 +61,54 @@ class ContatoController extends Controller
         return view('contato.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
+   /**
+     * Método para criação do contato
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param StoreRequest $request
+     *
+     * @return JsonResponse
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request): JsonResponse
     {
         // $verificaNomeNoBanco = $this->contatoService->searchEqualsName(Auth::user()->id, $request->nome);
 
         //Query para verificar se existe contato com o nome no banco
-       $verificaNomeNoBanco = DB::table('contatos')
+       /*$verificaNomeNoBanco = DB::table('contatos')
             ->where('nome', $request->nome)
             ->where('user_id',  Auth::user()->id)
-            ->count();
+            ->count();*/
+            $array_tags = explode(',', $request->tags);
 
-        $array_tags = explode(',', $request->tags);
+          /*  $params = new CreateContactsServiceParams(
+                $request->nome,
+                $request->tags,
+                $request->telefone,
+                $request->cep,
+                $request->endereco,
+                $request->bairro,
+                $request->cidade,
+                $request->uf,
+                $request->numero,
+                Auth::user()->id
+
+            );
+
+            $storeContactsResponse = $this->contatoService->store($params);
+
+            if (!$storeContactsResponse->success || is_null($storeContactsResponse->data)) {
+                return $this->errorResponseFromService($storeContactsResponse);
+            }
+
+            return $this->response(new DefaultResponse(
+                new UserResource($storeContactsResponse->data)
+            ));*/
+
 
         if (
             $request->nome == null || $request->telefone[0] == null || $request->tags[0] == null
         ) {
 
             return back()->withInput()->with('msgErro', 'Preencha todos os campos!');
-        } else if ($verificaNomeNoBanco > 0) {
-
-            return back()->withInput()->with('msgErro', 'Já existe um contato com esse nome!');
         } else {
 
             //Salva dados básicos do contato

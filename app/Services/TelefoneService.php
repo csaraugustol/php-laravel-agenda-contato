@@ -3,14 +3,16 @@
 namespace App\Services;
 
 use Throwable;
+use Illuminate\Support\Facades\DB;
 use App\Services\Responses\InternalError;
 use App\Services\Responses\ServiceResponse;
 use App\Repositories\Contracts\TelefoneRepository;
 use App\Services\Contracts\TelefoneServiceInterface;
+use App\Services\Params\Phone\CreatePhoneServiceParams;
 
 class TelefoneService extends BaseService implements TelefoneServiceInterface
 {
-   /**
+    /**
      * @var TelefoneRepository
      */
     private $telefoneRepository;
@@ -59,5 +61,37 @@ class TelefoneService extends BaseService implements TelefoneServiceInterface
         );
     }
 
+    public function store(CreatePhoneServiceParams $params): ServiceResponse
+    {
+        DB::beginTransaction();
 
+        try {
+            // Criando telefones
+            foreach ($params->phone_number as $phone_number) {
+                $createPhoneServiceParams = new CreatePhoneServiceParams(
+                    $params->phone_number,
+                    $params->ComoPassarOIdDoContatoAqui,
+                );
+                $storePhoneResponse = $this->store($createPhoneServiceParams);
+                if (!$storePhoneResponse->success) {
+                    DB::rollback();
+
+                    return $storePhoneResponse;
+                }
+            }
+
+            DB::commit();
+
+            $accountHolder = $storePhoneResponse->data;
+        } catch (Throwable $th) {
+            DB::rollback();
+            return $this->defaultErrorReturn($th, compact('params'));
+        }
+
+        return new ServiceResponse(
+            true,
+            'Telefone salvo com sucesso.',
+            $accountHolder
+        );
+    }
 }
