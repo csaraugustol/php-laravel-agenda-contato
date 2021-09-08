@@ -14,10 +14,11 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Query\Builder;
-use Illuminate\Database\Eloquent\Collection;
 use App\Http\Requests\Contacts\StoreRequest;
+use Illuminate\Database\Eloquent\Collection;
 use App\Services\Contracts\ContatoServiceInterface;
-use App\Services\Params\Contacts\CreateContactsServiceParams;
+use App\Services\Params\Phone\CreatePhoneServiceParams;
+use App\Services\Params\Contacts\CreateContactServiceParams;
 
 class ContatoController extends Controller
 {
@@ -70,27 +71,11 @@ class ContatoController extends Controller
      */
     public function store(StoreRequest $request): JsonResponse
     {
-        // $verificaNomeNoBanco = $this->contatoService->searchEqualsName(Auth::user()->id, $request->nome);
+            //$array_tags = explode(',', $request->tags);
 
-        //Query para verificar se existe contato com o nome no banco
-       /*$verificaNomeNoBanco = DB::table('contatos')
-            ->where('nome', $request->nome)
-            ->where('user_id',  Auth::user()->id)
-            ->count();*/
-            $array_tags = explode(',', $request->tags);
-
-          /*  $params = new CreateContactsServiceParams(
+            $params = new CreateContactServiceParams(
                 $request->nome,
-                $request->tags,
-                $request->telefone,
-                $request->cep,
-                $request->endereco,
-                $request->bairro,
-                $request->cidade,
-                $request->uf,
-                $request->numero,
                 Auth::user()->id
-
             );
 
             $storeContactsResponse = $this->contatoService->store($params);
@@ -99,10 +84,9 @@ class ContatoController extends Controller
                 return $this->errorResponseFromService($storeContactsResponse);
             }
 
-            return $this->response(new DefaultResponse(
+           /* return $this->response(new DefaultResponse(
                 new UserResource($storeContactsResponse->data)
             ));*/
-
 
         if (
             $request->nome == null || $request->telefone[0] == null || $request->tags[0] == null
@@ -119,13 +103,7 @@ class ContatoController extends Controller
             $c->save();
 
             //Salva array de tags
-            for ($i = 0; $i < count($array_tags); $i++) {
-                $this->t = new Tag();
-                $this->t->tag = $array_tags[$i];
-                $this->t->contato_id = $c->id;
-
-                $this->t->save();
-            }
+           
 
             //Salva array de telefone
             for ($i = 0; $i < count($request->telefone); $i++) {

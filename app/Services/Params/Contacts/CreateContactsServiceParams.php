@@ -7,7 +7,7 @@ use App\Services\Params\BaseServiceParams;
 /**
  * Parâmetros para criação de contato
  */
-class CreateContactsServiceParams extends BaseServiceParams
+class CreateContactServiceParams extends BaseServiceParams
 {
     public $name;
     public $user_id;
@@ -15,12 +15,12 @@ class CreateContactsServiceParams extends BaseServiceParams
     /**
      * Argumento necessários para criação do contato
      *
-     * @param string $name,
-     * @param string $user_id
+     * @param string    $name
+     * @param integer   $user_id
      */
     public function __construct(
         string $name,
-        string $user_id
+        int $user_id
     ) {
         parent::__construct();
     }

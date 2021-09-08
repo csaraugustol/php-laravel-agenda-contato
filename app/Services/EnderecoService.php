@@ -7,10 +7,11 @@ use App\Services\Responses\InternalError;
 use App\Services\Responses\ServiceResponse;
 use App\Repositories\Contracts\EnderecoRepository;
 use App\Services\Contracts\EnderecoServiceInterface;
+use App\Services\Params\Andress\CreateAndressServiceParams;
 
 class EnderecoService extends BaseService implements EnderecoServiceInterface
 {
-   /**
+    /**
      * @var EnderecoRepository
      */
     private $enderecoRepository;
@@ -59,5 +60,41 @@ class EnderecoService extends BaseService implements EnderecoServiceInterface
         );
     }
 
+    /**
+     * Criar um endereço
+     *
+     * @param CreateAndressServiceParams $params
+     *
+     * @return ServiceResponse
+     */
+    public function store(CreateAndressServiceParams $params): ServiceResponse
+    {
+        try {
+            // Criando endereço
+            $createAndressParams = new CreateAndressServiceParams(
+                $params->postal_code,
+                $params->andress,
+                $params->city,
+                $params->district,
+                $params->number,
+                $params->state,
+                $params->contact_id
+            );
 
+            $storeAndressResponse = $this->store($createAndressParams);
+            if (!$storeAndressResponse->success) {
+                return $storeAndressResponse;
+            }
+
+            $andress = $storeAndressResponse->data;
+        } catch (Throwable $th) {
+            return $this->defaultErrorReturn($th, compact('params'));
+        }
+
+        return new ServiceResponse(
+            true,
+            'Endereço salvo com sucesso.',
+            $andress
+        );
+    }
 }

@@ -15,12 +15,12 @@ class CreatePhoneServiceParams extends BaseServiceParams
     /**
      * Argumento necessários para criação do telefone
      *
-     * @param string $phone_number,
-     * @param int $contact_id,
+     * @param string    $phone_number
+     * @param integer   $contact_id
      */
     public function __construct(
         string $phone_number,
-        string $contact_id
+        int $contact_id
     ) {
         parent::__construct();
     }
