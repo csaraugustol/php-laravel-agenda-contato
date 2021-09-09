@@ -10,17 +10,17 @@ use App\Services\Params\BaseServiceParams;
 class CreateTagServiceParams extends BaseServiceParams
 {
     public $tag;
-    public $contact_id;
+    public $contato_id;
 
     /**
      * Argumento necessários para criação da tag
      *
-     * @param string    $tag
-     * @param integer   $contact_id
+     * @param string    $tags
+     * @param integer   $contato_id
      */
     public function __construct(
         string $tag,
-        int $contact_id
+        int $contato_id
     ) {
         parent::__construct();
     }

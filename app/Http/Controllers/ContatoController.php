@@ -2,22 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use Excel;
-use App\Tag;
-use App\User;
 use App\Contato;
 use App\Endereco;
 use App\Telefone;
 use Illuminate\Http\Request;
-use App\Imports\ContatoImport;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Database\Query\Builder;
 use App\Http\Requests\Contacts\StoreRequest;
-use Illuminate\Database\Eloquent\Collection;
+use App\Services\Contracts\TagServiceInterface;
 use App\Services\Contracts\ContatoServiceInterface;
+use App\Services\Contracts\EnderecoServiceInterface;
+use App\Services\Contracts\TelefoneServiceInterface;
+use App\Services\Params\Tags\CreateTagServiceParams;
 use App\Services\Params\Phone\CreatePhoneServiceParams;
+use App\Services\Params\Andress\CreateAndressServiceParams;
 use App\Services\Params\Contacts\CreateContactServiceParams;
 
 class ContatoController extends Controller
@@ -41,6 +39,47 @@ class ContatoController extends Controller
 
     public function index(Request $request)
     {
+        $contactParams = new CreateContactServiceParams(
+            'V',
+            Auth::user()->id
+        );
+
+        $contactStoreResponse = app(ContatoServiceInterface::class)->store($contactParams);
+        $contact =  $contactStoreResponse->data;
+        //dd($contact->id);
+        //dd($contactStoreResponse);
+        //dd($contact);
+
+        $phoneParams =  new CreatePhoneServiceParams(
+            '37349405000',
+            $contact->id
+        );
+        $storePhoneResponse = app(TelefoneServiceInterface::class)->store($phoneParams);
+        $phone  =  $storePhoneResponse->data;
+        //dd($phone);
+
+        $tagParams =  new CreateTagServiceParams(
+            'Vex',
+            $contact->id
+        );
+        $storeTagResponse = app(TagServiceInterface::class)->store($tagParams);
+        //dd($storeTagResponse);
+
+        $andressParams =  new CreateAndressServiceParams(
+            '00000-000',
+            'Rua Teste',
+            'Cidade Teste',
+            'Bairro Teste',
+            '007',
+            'UF',
+            $contact->id
+        );
+        $storeAndressResponse = app(EnderecoServiceInterface::class)->store($andressParams);
+        $andress  =  $storePhoneResponse->data;
+        //dd($andress);
+
+        /*----------------------------------------------------------------------------*/
+
         $findContactsResponse = $this->contatoService->filterSearch(Auth::user()->id, $request->btnBusca);
 
         if (!$findContactsResponse->success) {
@@ -62,7 +101,7 @@ class ContatoController extends Controller
         return view('contato.create');
     }
 
-   /**
+    /**
      * Método para criação do contato
      *
      * @param StoreRequest $request
@@ -71,20 +110,20 @@ class ContatoController extends Controller
      */
     public function store(StoreRequest $request): JsonResponse
     {
-            //$array_tags = explode(',', $request->tags);
+        //$array_tags = explode(',', $request->tags);
 
-            $params = new CreateContactServiceParams(
-                $request->nome,
-                Auth::user()->id
-            );
+        $params = new CreateContactServiceParams(
+            $request->nome,
+            Auth::user()->id
+        );
 
-            $storeContactsResponse = $this->contatoService->store($params);
+        $storeContactsResponse = $this->contatoService->store($params);
 
-            if (!$storeContactsResponse->success || is_null($storeContactsResponse->data)) {
-                return $this->errorResponseFromService($storeContactsResponse);
-            }
+        if (!$storeContactsResponse->success || is_null($storeContactsResponse->data)) {
+            return $this->errorResponseFromService($storeContactsResponse);
+        }
 
-           /* return $this->response(new DefaultResponse(
+        /* return $this->response(new DefaultResponse(
                 new UserResource($storeContactsResponse->data)
             ));*/
 
@@ -103,7 +142,7 @@ class ContatoController extends Controller
             $c->save();
 
             //Salva array de tags
-           
+
 
             //Salva array de telefone
             for ($i = 0; $i < count($request->telefone); $i++) {
@@ -158,7 +197,7 @@ class ContatoController extends Controller
 
         $endereco = Endereco::where("contato_id", $id)->get();
 
-       return view('contato.edit', ['contato' => $contato, 'tel' => $tel, 'endereco' => $endereco, 'primeiroTel' => $primeiroTel]);
+        return view('contato.edit', ['contato' => $contato, 'tel' => $tel, 'endereco' => $endereco, 'primeiroTel' => $primeiroTel]);
     }
 
     /**

@@ -70,18 +70,8 @@ class TelefoneService extends BaseService implements TelefoneServiceInterface
     public function store(CreatePhoneServiceParams $params): ServiceResponse
     {
         try {
-            // Criando telefone
-            $createPhoneParams = new CreatePhoneServiceParams(
-                $params->phone_number,
-                $params->contact_id
-            );
 
-            $storePhoneResponse = $this->store($createPhoneParams);
-            if (!$storePhoneResponse->success) {
-                return $storePhoneResponse;
-            }
-
-            $phone = $storePhoneResponse->data;
+            $phone = $this->telefoneRepository->create($params->toArray());
         } catch (Throwable $th) {
             return $this->defaultErrorReturn($th, compact('params'));
         }

@@ -54,15 +54,15 @@ class ContatoRepositoryEloquent extends BaseRepositoryEloquent implements Contat
      *
      * @param string $name
      *
-     * @return Integer
+     * @return int
      */
-    public function searchEqualsName(int $idUser, string $name): Integer
+    public function countEqualsNameUserLogged(int $idUser, string $name): int
     {
-        $names = $this->where('contatos')
+        $countNames = $this->model
         ->where('nome', $name)
         ->where('user_id',  $idUser)
         ->count();
 
-        return $names;
+        return $countNames;
     }
 }

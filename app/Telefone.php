@@ -10,7 +10,7 @@ class Telefone extends Model
 
 
     protected $fillable = [
-        'endereco',
+        'telefone',
         'contato_id'
     ]; 
 

@@ -70,23 +70,8 @@ class EnderecoService extends BaseService implements EnderecoServiceInterface
     public function store(CreateAndressServiceParams $params): ServiceResponse
     {
         try {
-            // Criando endereço
-            $createAndressParams = new CreateAndressServiceParams(
-                $params->postal_code,
-                $params->andress,
-                $params->city,
-                $params->district,
-                $params->number,
-                $params->state,
-                $params->contact_id
-            );
 
-            $storeAndressResponse = $this->store($createAndressParams);
-            if (!$storeAndressResponse->success) {
-                return $storeAndressResponse;
-            }
-
-            $andress = $storeAndressResponse->data;
+            $andress = $this->enderecoRepository->create($params->toArray());
         } catch (Throwable $th) {
             return $this->defaultErrorReturn($th, compact('params'));
         }

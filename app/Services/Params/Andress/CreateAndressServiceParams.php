@@ -9,28 +9,33 @@ use App\Services\Params\BaseServiceParams;
  */
 class CreateAndressServiceParams extends BaseServiceParams
 {
-    public $postal_code;
-    public $andress;
-    public $city;
-    public $district;
-    public $number;
-    public $state;
-    public $contact_id;
-   
+    public $cep;
+    public $endereco;
+    public $cidade;
+    public $bairro;
+    public $numero;
+    public $uf;
+    public $contato_id;
+
     /**
      * Argumento necessários para criação do endereço
      *
-     * @param string     $postal_code
-     * @param string     $andress
-     * @param string     $city
+     * @param string     $cep
+     * @param string     $endereco
+     * @param string     $cidade
      * @param string     $district
-     * @param string     $number
-     * @param string     $state
-     * @param integer    $contact_id
+     * @param string     $numero
+     * @param string     $uf
+     * @param integer    $contato_id
      */
     public function __construct(
-        string $tag,
-        int $contact_id
+        string   $cep,
+        string   $endereco,
+        string   $cidade,
+        string   $bairro,
+        string   $numero,
+        string   $uf,
+        int      $contato_id
     ) {
         parent::__construct();
     }

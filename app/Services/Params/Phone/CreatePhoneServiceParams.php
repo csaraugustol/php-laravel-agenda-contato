@@ -9,18 +9,18 @@ use App\Services\Params\BaseServiceParams;
  */
 class CreatePhoneServiceParams extends BaseServiceParams
 {
-    public $phone_number;
-    public $contact_id;
+    public $telefone;
+    public $contato_id;
    
     /**
      * Argumento necessários para criação do telefone
      *
-     * @param string    $phone_number
-     * @param integer   $contact_id
+     * @param string    $telefone
+     * @param integer   $contato_id
      */
     public function __construct(
-        string $phone_number,
-        int $contact_id
+        string $telefone,
+        int $contato_id
     ) {
         parent::__construct();
     }

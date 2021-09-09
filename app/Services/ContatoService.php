@@ -3,14 +3,10 @@
 namespace App\Services;
 
 use Throwable;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
 use App\Services\Responses\InternalError;
 use App\Services\Responses\ServiceResponse;
 use App\Repositories\Contracts\ContatoRepository;
 use App\Services\Contracts\ContatoServiceInterface;
-use App\Services\Contracts\TelefoneServiceInterface;
-use App\Services\Params\Phone\CreatePhoneServiceParams;
 use App\Services\Params\Contacts\CreateContactServiceParams;
 
 class ContatoService extends BaseService implements ContatoServiceInterface
@@ -78,7 +74,7 @@ class ContatoService extends BaseService implements ContatoServiceInterface
             // A variável tem que indicar o que ela realmente é
             $contacts = $this->contatoRepository->filterSearch($idUser, $filter);
         } catch (Throwable $th) {
-            return $this->defaultErrorReturn('Erro ao buscar filtragem.');
+            return $this->defaultErrorReturn('Já existe contato com esse nome.');
         }
 
         return new ServiceResponse(
@@ -97,10 +93,10 @@ class ContatoService extends BaseService implements ContatoServiceInterface
      *
      * @return ServiceResponse
      */
-    public function searchEqualsName(int $idUser, string $name): ServiceResponse
+    public function countEqualsNameUserLogged(int $idUser, string $name): ServiceResponse
     {
         try {
-            $search = $this->contatoRepository->searchEqualsName($idUser,  $name);
+            $search = $this->contatoRepository->countEqualsNameUserLogged($idUser,  $name);
         } catch (Throwable $th) {
             return $this->defaultErrorReturn('Erro ao buscar .');
         }
@@ -123,24 +119,13 @@ class ContatoService extends BaseService implements ContatoServiceInterface
     {
         try {
             // Verifica se a contato existe
-            $findContactResponse = app(ContatoService::class)->searchEqualsName($params->name);
+            $findContactResponse = $this->countEqualsNameUserLogged($params->user_id, $params->nome);
 
-            if (!$findContactResponse->success || is_null($findContactResponse->data)) {
+            if (!$findContactResponse->success || $findContactResponse->data > 0) {
                 return $findContactResponse;
             }
 
-            // Criando contato
-            $createContactParams = new CreateContactServiceParams(
-                $params->name,
-                $params->user_id
-            );
-
-            $storeContactResponse = $this->store($createContactParams);
-            if (!$storeContactResponse->success) {
-                return $storeContactResponse;
-            }
-
-            $contact = $storeContactResponse->data;
+            $contact = $this->contatoRepository->create($params->toArray());
         } catch (Throwable $th) {
             return $this->defaultErrorReturn($th, compact('params'));
         }

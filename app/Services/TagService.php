@@ -70,18 +70,8 @@ class TagService extends BaseService implements TagServiceInterface
     public function store(CreateTagServiceParams $params): ServiceResponse
     {
         try {
-            // Criando tag
-            $createTagParams = new CreateTagServiceParams(
-                $params->tag,
-                $params->contact_id
-            );
 
-            $storeTagResponse = $this->store($createTagParams);
-            if (!$storeTagResponse->success) {
-                return $storeTagResponse;
-            }
-
-            $tag = $storeTagResponse->data;
+            $tag = $this->tagRepository->create($params->toArray());
         } catch (Throwable $th) {
             return $this->defaultErrorReturn($th, compact('params'));
         }
