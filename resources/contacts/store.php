@@ -1,0 +1,25 @@
+<?php
+
+return [
+    'nome_required'                 => __('O campo NOME é obrigatório'),
+    'nome_string'                   => __('O campo NOME deve ser do tipo "STRING"'),
+    'nome_unique'                   => __('O NOME informado já existe'),
+    'tags_required'                 => __('O campo TAG é obrigatório'),
+    'tags_string'                   => __('O campo TAG deve ser do tipo "STRING"'),
+    'telefones_required'            => __('O campo TELEFONE é obrigatório'),
+    'telefones_string'              => __('O campo TELEFONE deve ser do tipo "STRING"'),
+    'cep_required'                  => __('O campo CEP é obrigatório'),
+    'cep_string'                    => __('O campo CEP deve ser do tipo "STRING"'),
+    'cep_max'                       => __('O camṕo UF pode conter no máximo 9 caracteres'),
+    'endereco_required'             => __('O campo ENDEREÇO é obrigatório'),
+    'endereco_string'               => __('O campo ENDEREÇO deve ser do tipo "STRING"'),
+    'bairro_required'               => __('O campo BAIRRO é obrigatório'),
+    'bairro_string'                 => __('O campo BEIRRO deve ser do tipo "STRING"'),
+    'cidade_required'               => __('O campo CIDADE é obrigatório'),
+    'cidade_string'                 => __('O campo CIDADE deve ser do tipo "STRING"'),
+    'uf_required'                   => __('O campo UF é obrigatório'),
+    'uf_string'                     => __('O campo UF deve ser do tipo "STRING"'),
+    'uf_max'                        => __('O camṕo UF pode conter no máximo 2 caracteres'),
+    'numero_string'                 => __('O campo NÚMERO deve ser do tipo "STRING"'),
+    'numero_required'               => __('O campo NÚMERO é obrigatório'),
+];

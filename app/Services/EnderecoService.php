@@ -7,10 +7,11 @@ use App\Services\Responses\InternalError;
 use App\Services\Responses\ServiceResponse;
 use App\Repositories\Contracts\EnderecoRepository;
 use App\Services\Contracts\EnderecoServiceInterface;
+use App\Services\Params\Adress\CreateAdressServiceParams;
 
 class EnderecoService extends BaseService implements EnderecoServiceInterface
 {
-   /**
+    /**
      * @var EnderecoRepository
      */
     private $enderecoRepository;
@@ -26,16 +27,16 @@ class EnderecoService extends BaseService implements EnderecoServiceInterface
     /**
      * Obter um endereco pelo id
      *
-     * @param integer $idAndress
+     * @param int $idAdress
      *
      * @return ServiceResponse
      */
-    public function find(int $idAndress): ServiceResponse
+    public function find(int $idAdress): ServiceResponse
     {
         try {
-            $andress = $this->enderecoRepository->findOrNull($idAndress);
+            $adress = $this->enderecoRepository->findOrNull($idAdress);
 
-            if (is_null($andress)) {
+            if (is_null($adress)) {
                 return new ServiceResponse(
                     true,
                     'O endereço não existe.',
@@ -55,9 +56,29 @@ class EnderecoService extends BaseService implements EnderecoServiceInterface
         return new ServiceResponse(
             true,
             'Endereço encontrado com sucesso.',
-            $andress
+            $adress
         );
     }
 
+    /**
+     * Criar um endereço
+     *
+     * @param CreateAdressServiceParams $params
+     *
+     * @return ServiceResponse
+     */
+    public function store(CreateAdressServiceParams $params): ServiceResponse
+    {
+        try {
+            $adress = $this->enderecoRepository->create($params->toArray());
+        } catch (Throwable $th) {
+            return $this->defaultErrorReturn($th, compact('params'));
+        }
 
+        return new ServiceResponse(
+            true,
+            'Endereço salvo com sucesso.',
+            $adress
+        );
+    }
 }

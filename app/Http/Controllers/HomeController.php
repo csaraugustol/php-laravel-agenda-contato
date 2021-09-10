@@ -26,9 +26,10 @@ class HomeController extends Controller
     public function index()
     {
         $contatos = Contato::where("user_id", Auth::user()
-        ->id)
-        ->orderBy('nome', 'asc')
-        ->get();
+            ->id)
+            ->orderBy('nome', 'asc')
+            ->get();
+
         return view('contato.index', ['contatos' =>  $contatos]);
-    }   
+    }
 }

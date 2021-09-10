@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Endereco;
 use Illuminate\Http\Request;
 use App\Services\Contracts\EnderecoServiceInterface;
 
@@ -93,6 +92,4 @@ class EnderecoController extends Controller
     {
         //
     }
-
-    
 }

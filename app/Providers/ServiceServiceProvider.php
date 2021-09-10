@@ -66,9 +66,9 @@ class ServiceServiceProvider extends ServiceProvider
             $interfaces = $interfaces->reject(function ($interface) {
                 return in_array($interface, ['.', '..']);
             })
-            ->map(function ($interface) {
-                return str_replace('.php', '', $interface);
-            });
+                ->map(function ($interface) {
+                    return str_replace('.php', '', $interface);
+                });
 
             // Ralizando o bind da classe que irá implementar a interface
             $interfaces->each(function ($interfaceClassName) use ($implementationPath, $identifier) {

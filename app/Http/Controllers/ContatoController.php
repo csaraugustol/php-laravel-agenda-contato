@@ -2,19 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use Excel;
-use App\Tag;
-use App\User;
 use App\Contato;
 use App\Endereco;
 use App\Telefone;
 use Illuminate\Http\Request;
-use App\Imports\ContatoImport;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Database\Query\Builder;
-use Illuminate\Database\Eloquent\Collection;
+use App\Http\Requests\Contacts\StoreRequest;
 use App\Services\Contracts\ContatoServiceInterface;
+use App\Services\Params\Contacts\CreateContactServiceParams;
 
 class ContatoController extends Controller
 {
@@ -59,31 +55,36 @@ class ContatoController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Método para criação do contato
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param StoreRequest $request
+     *
+     * @return JsonResponse
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request): JsonResponse
     {
-        // $verificaNomeNoBanco = $this->contatoService->searchEqualsName(Auth::user()->id, $request->nome);
+        //$array_tags = explode(',', $request->tags);
 
-        //Query para verificar se existe contato com o nome no banco
-       $verificaNomeNoBanco = DB::table('contatos')
-            ->where('nome', $request->nome)
-            ->where('user_id',  Auth::user()->id)
-            ->count();
+        $params = new CreateContactServiceParams(
+            $request->nome,
+            Auth::user()->id
+        );
 
-        $array_tags = explode(',', $request->tags);
+        $storeContactsResponse = $this->contatoService->store($params);
+
+        if (!$storeContactsResponse->success || is_null($storeContactsResponse->data)) {
+            return $this->errorResponseFromService($storeContactsResponse);
+        }
+
+        /* return $this->response(new DefaultResponse(
+                new UserResource($storeContactsResponse->data)
+            ));*/
 
         if (
             $request->nome == null || $request->telefone[0] == null || $request->tags[0] == null
         ) {
 
             return back()->withInput()->with('msgErro', 'Preencha todos os campos!');
-        } else if ($verificaNomeNoBanco > 0) {
-
-            return back()->withInput()->with('msgErro', 'Já existe um contato com esse nome!');
         } else {
 
             //Salva dados básicos do contato
@@ -94,13 +95,7 @@ class ContatoController extends Controller
             $c->save();
 
             //Salva array de tags
-            for ($i = 0; $i < count($array_tags); $i++) {
-                $this->t = new Tag();
-                $this->t->tag = $array_tags[$i];
-                $this->t->contato_id = $c->id;
 
-                $this->t->save();
-            }
 
             //Salva array de telefone
             for ($i = 0; $i < count($request->telefone); $i++) {
@@ -155,7 +150,7 @@ class ContatoController extends Controller
 
         $endereco = Endereco::where("contato_id", $id)->get();
 
-       return view('contato.edit', ['contato' => $contato, 'tel' => $tel, 'endereco' => $endereco, 'primeiroTel' => $primeiroTel]);
+        return view('contato.edit', ['contato' => $contato, 'tel' => $tel, 'endereco' => $endereco, 'primeiroTel' => $primeiroTel]);
     }
 
     /**

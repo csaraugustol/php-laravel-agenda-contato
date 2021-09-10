@@ -7,10 +7,11 @@ use App\Services\Responses\InternalError;
 use App\Services\Responses\ServiceResponse;
 use App\Repositories\Contracts\TagRepository;
 use App\Services\Contracts\TagServiceInterface;
+use App\Services\Params\Tags\CreateTagServiceParams;
 
 class TagService extends BaseService implements TagServiceInterface
 {
-   /**
+    /**
      * @var TagRepository
      */
     private $tagRepository;
@@ -26,7 +27,7 @@ class TagService extends BaseService implements TagServiceInterface
     /**
      * Obter uma tag pelo id
      *
-     * @param integer $idTag
+     * @param int $idTag
      *
      * @return ServiceResponse
      */
@@ -59,5 +60,25 @@ class TagService extends BaseService implements TagServiceInterface
         );
     }
 
+    /**
+     * Criar uma tag
+     *
+     * @param CreateTagServiceParams $params
+     *
+     * @return ServiceResponse
+     */
+    public function store(CreateTagServiceParams $params): ServiceResponse
+    {
+        try {
+            $tag = $this->tagRepository->create($params->toArray());
+        } catch (Throwable $th) {
+            return $this->defaultErrorReturn($th, compact('params'));
+        }
 
+        return new ServiceResponse(
+            true,
+            'Tag salva com sucesso.',
+            $tag
+        );
+    }
 }

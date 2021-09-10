@@ -10,7 +10,7 @@ use App\Services\Contracts\UsuarioServiceInterface;
 
 class UsuarioService extends BaseService implements UsuarioServiceInterface
 {
-   /**
+    /**
      * @var UsuarioRepository
      */
     private $usuarioRepository;
@@ -26,7 +26,7 @@ class UsuarioService extends BaseService implements UsuarioServiceInterface
     /**
      * Obter um usuário pelo id
      *
-     * @param integer $idUser
+     * @param int $idUser
      *
      * @return ServiceResponse
      */
@@ -58,6 +58,4 @@ class UsuarioService extends BaseService implements UsuarioServiceInterface
             $user
         );
     }
-
-
 }

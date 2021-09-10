@@ -8,11 +8,11 @@ class Tag extends Model
 {
     protected $fillable = [
         'tag',
-        'contato_id'
-    ]; 
+        'contato_id',
+    ];
 
-    public function contato(){
-
+    public function contato()
+    {
         return $this->belongsTo('App\Contato', 'contato_id');
     }
 }

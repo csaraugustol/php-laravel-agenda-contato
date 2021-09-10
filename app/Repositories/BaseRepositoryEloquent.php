@@ -45,7 +45,7 @@ abstract class BaseRepositoryEloquent extends BaseRepository implements BaseRepo
      * Deletar a model, independente de receber
      * um ID ou Uuid como parâmetro para remoção
      *
-     * @param integer|string $id
+     * @param int|string $id
      *
      * @return Model|null
      */

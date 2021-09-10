@@ -7,10 +7,11 @@ use App\Services\Responses\InternalError;
 use App\Services\Responses\ServiceResponse;
 use App\Repositories\Contracts\TelefoneRepository;
 use App\Services\Contracts\TelefoneServiceInterface;
+use App\Services\Params\Phone\CreatePhoneServiceParams;
 
 class TelefoneService extends BaseService implements TelefoneServiceInterface
 {
-   /**
+    /**
      * @var TelefoneRepository
      */
     private $telefoneRepository;
@@ -26,7 +27,7 @@ class TelefoneService extends BaseService implements TelefoneServiceInterface
     /**
      * Obter um telefone pelo id
      *
-     * @param integer $idPhone
+     * @param int $idPhone
      *
      * @return ServiceResponse
      */
@@ -59,5 +60,25 @@ class TelefoneService extends BaseService implements TelefoneServiceInterface
         );
     }
 
+    /**
+     * Criar um telefone
+     *
+     * @param CreatePhoneServiceParams $params
+     *
+     * @return ServiceResponse
+     */
+    public function store(CreatePhoneServiceParams $params): ServiceResponse
+    {
+        try {
+            $phone = $this->telefoneRepository->create($params->toArray());
+        } catch (Throwable $th) {
+            return $this->defaultErrorReturn($th, compact('params'));
+        }
 
+        return new ServiceResponse(
+            true,
+            'Telefone salvo com sucesso.',
+            $phone
+        );
+    }
 }

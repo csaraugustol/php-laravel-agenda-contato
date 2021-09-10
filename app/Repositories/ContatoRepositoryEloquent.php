@@ -25,7 +25,7 @@ class ContatoRepositoryEloquent extends BaseRepositoryEloquent implements Contat
     /**
      * Obter busca filtrada de contato
      *
-     * @param integer $idUser
+     * @param int $idUser
      *
      * @param string $filter
      *
@@ -46,23 +46,23 @@ class ContatoRepositoryEloquent extends BaseRepositoryEloquent implements Contat
         return $contacts;
     }
 
-
     /**
-     * Verificar se já existe nome cadastrado
+     * Realiza contagem de um nome de contato específico do usuário logado
+     * para verificar se há repetição
      *
-     * @param integer $idUser
+     * @param int $idUser
      *
      * @param string $name
      *
-     * @return Integer
+     * @return int
      */
-    public function searchEqualsName(int $idUser, string $name): Integer
+    public function countEqualsNameUserLogged(int $idUser, string $name): int
     {
-        $names = $this->where('contatos')
-        ->where('nome', $name)
-        ->where('user_id',  $idUser)
-        ->count();
+        $countNames = $this->model
+            ->where('nome', $name)
+            ->where('user_id', $idUser)
+            ->count();
 
-        return $names;
+        return $countNames;
     }
 }

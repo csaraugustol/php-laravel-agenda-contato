@@ -13,7 +13,8 @@ class BaseService
      *
      * @return array
      */
-    protected function defaultErrorReturn(string $message): ServiceResponse {
+    protected function defaultErrorReturn(string $message): ServiceResponse
+    {
         return new ServiceResponse(
             false,
             $message,
