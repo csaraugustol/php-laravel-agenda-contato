@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Endereco extends Model
 {
-
     protected $fillable = [
         'cep',
         'endereco',
@@ -14,12 +13,11 @@ class Endereco extends Model
         'cidade',
         'uf',
         'numero',
-        'contato_id'
+        'contato_id',
     ];
 
-    public function contato(){
-
+    public function contato()
+    {
         return $this->belongsTo('App\Contato', 'contato_id');
     }
 }
-

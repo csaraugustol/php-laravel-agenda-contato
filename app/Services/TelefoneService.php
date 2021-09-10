@@ -27,7 +27,7 @@ class TelefoneService extends BaseService implements TelefoneServiceInterface
     /**
      * Obter um telefone pelo id
      *
-     * @param integer $idPhone
+     * @param int $idPhone
      *
      * @return ServiceResponse
      */
@@ -70,7 +70,6 @@ class TelefoneService extends BaseService implements TelefoneServiceInterface
     public function store(CreatePhoneServiceParams $params): ServiceResponse
     {
         try {
-
             $phone = $this->telefoneRepository->create($params->toArray());
         } catch (Throwable $th) {
             return $this->defaultErrorReturn($th, compact('params'));

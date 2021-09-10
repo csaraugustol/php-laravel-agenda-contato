@@ -2,19 +2,13 @@
 
 namespace App;
 
-use App\User;
-use App\Endereco;
-use App\Telefone;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Schema;
 
 class Contato extends Model
 {
-
     protected $fillable = [
         'user_id',
-        'nome'
+        'nome',
     ];
 
     public function user()
@@ -36,6 +30,4 @@ class Contato extends Model
     {
         return $this->hasMany('App\Tag');
     }
-
-    
 }

@@ -9,13 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Contacts\StoreRequest;
-use App\Services\Contracts\TagServiceInterface;
 use App\Services\Contracts\ContatoServiceInterface;
-use App\Services\Contracts\EnderecoServiceInterface;
-use App\Services\Contracts\TelefoneServiceInterface;
-use App\Services\Params\Tags\CreateTagServiceParams;
-use App\Services\Params\Phone\CreatePhoneServiceParams;
-use App\Services\Params\Andress\CreateAndressServiceParams;
 use App\Services\Params\Contacts\CreateContactServiceParams;
 
 class ContatoController extends Controller
@@ -39,47 +33,6 @@ class ContatoController extends Controller
 
     public function index(Request $request)
     {
-        $contactParams = new CreateContactServiceParams(
-            'V',
-            Auth::user()->id
-        );
-
-        $contactStoreResponse = app(ContatoServiceInterface::class)->store($contactParams);
-        $contact =  $contactStoreResponse->data;
-        //dd($contact->id);
-        //dd($contactStoreResponse);
-        //dd($contact);
-
-        $phoneParams =  new CreatePhoneServiceParams(
-            '37349405000',
-            $contact->id
-        );
-        $storePhoneResponse = app(TelefoneServiceInterface::class)->store($phoneParams);
-        $phone  =  $storePhoneResponse->data;
-        //dd($phone);
-
-        $tagParams =  new CreateTagServiceParams(
-            'Vex',
-            $contact->id
-        );
-        $storeTagResponse = app(TagServiceInterface::class)->store($tagParams);
-        //dd($storeTagResponse);
-
-        $andressParams =  new CreateAndressServiceParams(
-            '00000-000',
-            'Rua Teste',
-            'Cidade Teste',
-            'Bairro Teste',
-            '007',
-            'UF',
-            $contact->id
-        );
-        $storeAndressResponse = app(EnderecoServiceInterface::class)->store($andressParams);
-        $andress  =  $storePhoneResponse->data;
-        //dd($andress);
-
-        /*----------------------------------------------------------------------------*/
-
         $findContactsResponse = $this->contatoService->filterSearch(Auth::user()->id, $request->btnBusca);
 
         if (!$findContactsResponse->success) {

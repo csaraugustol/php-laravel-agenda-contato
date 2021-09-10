@@ -27,7 +27,7 @@ class TagService extends BaseService implements TagServiceInterface
     /**
      * Obter uma tag pelo id
      *
-     * @param integer $idTag
+     * @param int $idTag
      *
      * @return ServiceResponse
      */

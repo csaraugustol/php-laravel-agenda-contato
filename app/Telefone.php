@@ -7,16 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Telefone extends Model
 {
-
-
     protected $fillable = [
         'telefone',
-        'contato_id'
-    ]; 
+        'contato_id',
+    ];
 
-    public function contato(){
-
+    public function contato()
+    {
         return $this->belongsTo('App\Contato', 'contato_id');
     }
 }
-

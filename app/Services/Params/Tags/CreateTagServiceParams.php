@@ -15,8 +15,8 @@ class CreateTagServiceParams extends BaseServiceParams
     /**
      * Argumento necessários para criação da tag
      *
-     * @param string    $tags
-     * @param integer   $contato_id
+     * @param string $tag
+     * @param int    $contato_id
      */
     public function __construct(
         string $tag,

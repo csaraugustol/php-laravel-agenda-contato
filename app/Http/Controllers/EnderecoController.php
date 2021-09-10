@@ -94,5 +94,5 @@ class EnderecoController extends Controller
         //
     }
 
-    
+
 }

@@ -8,12 +8,12 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class ExcelController extends Controller
 {
-    public function export() 
+    public function export()
     {
 
-      
 
-        
+
+
        $contatosExcel =  ContatosExport::query();
 
       // dd($contatosExcel);
@@ -22,7 +22,7 @@ class ExcelController extends Controller
 
         return   Excel::download(new ContatosExport, 'contatos.xlsx');
 
-      
+
     }
 
     public function find(string $idUser): ServiceResponse
