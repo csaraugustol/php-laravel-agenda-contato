@@ -10,7 +10,7 @@ use App\Services\Contracts\UsuarioServiceInterface;
 
 class UsuarioService extends BaseService implements UsuarioServiceInterface
 {
-   /**
+    /**
      * @var UsuarioRepository
      */
     private $usuarioRepository;

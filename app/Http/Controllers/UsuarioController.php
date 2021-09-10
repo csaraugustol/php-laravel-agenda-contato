@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\User;
 
 use Illuminate\Http\Request;
@@ -46,24 +47,18 @@ class UsuarioController extends Controller
      */
     public function store(Request $request)
     {
-        if(empty($request->nome) or empty($request->email) or empty($request->senha)){
-
+        if (empty($request->nome) or empty($request->email) or empty($request->senha)) {
             return back()->withInput()->with('msgErro', 'Preencha todos os campos!');
-
-        }else{
+        } else {
 
             $u = new User();
             $u->name = $request->nome;
             $u->email = $request->email;
             $u->password = bcrypt($request->senha);
-    
             $u->save();
 
-
-        
-        return redirect("/usuario")->with('msgSuc', 'Cadastrado realizado com sucesso!')->withInput();
+            return redirect("/usuario")->with('msgSuc', 'Cadastrado realizado com sucesso!')->withInput();
         }
-   
     }
 
     /**
@@ -110,6 +105,4 @@ class UsuarioController extends Controller
     {
         //
     }
-
-   
 }

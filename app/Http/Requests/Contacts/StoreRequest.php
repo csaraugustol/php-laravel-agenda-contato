@@ -20,9 +20,9 @@ class StoreRequest extends FormRequest
     }
 
     /**
-     *  Filters to be applied to the input.
+     * Filters to be applied to the input.
      *
-     *  @return array
+     * @return array
      */
     public function filters()
     {
@@ -69,27 +69,27 @@ class StoreRequest extends FormRequest
     public function messages()
     {
         return [
-            'nome.required'                 => __('contacts/store.nome_required'),
-            'nome.string'                   => __('contacts/store.nome_string'),
-            'nome.unique'                   => __('contacts/store.nome_unique'),
-            'tags.required'                 => __('contacts/store.tags_required'),
-            'tags.string'                   => __('contacts/store.tags_string'),
-            'telefones.required'            => __('contacts/store.telefones_required'),
-            'telefones.string'              => __('contacts/store.telefones_string'),
-            'cep.required'                  => __('contacts/store.cep_required'),
-            'cep.string'                    => __('contacts/store.cep_string'),
-            'cep.max'                       => __('contacts/store.cep_max'),
-            'endereco.required'             => __('contacts/store.endereco_required'),
-            'endereco.string'               => __('contacts/store.endereco_string'),
-            'bairro.required'               => __('contacts/store.bairro_required'),
-            'bairro.string'                 => __('contacts/store.bairro_string'),
-            'cidade.required'               => __('contacts/store.cidade_required'),
-            'cidade.string'                 => __('contacts/store.cidade_string'),
-            'uf.required'                   => __('contacts/store.uf_required'),
-            'uf.string'                     => __('contacts/store.uf_string'),
-            'uf.max'                        => __('contacts/store.uf_max'),
-            'numero.string'                 => __('contacts/store.numero_string'),
-            'numero.required'               => __('contacts/store.numero_required'),
+            'nome.required'               => __('contacts/store.nome_required'),
+            'nome.string'                 => __('contacts/store.nome_string'),
+            'nome.unique'                 => __('contacts/store.nome_unique'),
+            'tags.required'               => __('contacts/store.tags_required'),
+            'tags.string'                 => __('contacts/store.tags_string'),
+            'telefones.required'          => __('contacts/store.telefones_required'),
+            'telefones.string'            => __('contacts/store.telefones_string'),
+            'cep.required'                => __('contacts/store.cep_required'),
+            'cep.string'                  => __('contacts/store.cep_string'),
+            'cep.max'                     => __('contacts/store.cep_max'),
+            'endereco.required'           => __('contacts/store.endereco_required'),
+            'endereco.string'             => __('contacts/store.endereco_string'),
+            'bairro.required'             => __('contacts/store.bairro_required'),
+            'bairro.string'               => __('contacts/store.bairro_string'),
+            'cidade.required'             => __('contacts/store.cidade_required'),
+            'cidade.string'               => __('contacts/store.cidade_string'),
+            'uf.required'                 => __('contacts/store.uf_required'),
+            'uf.string'                   => __('contacts/store.uf_string'),
+            'uf.max'                      => __('contacts/store.uf_max'),
+            'numero.string'               => __('contacts/store.numero_string'),
+            'numero.required'             => __('contacts/store.numero_required'),
         ];
     }
 }

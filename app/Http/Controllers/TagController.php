@@ -7,7 +7,7 @@ use App\Services\Contracts\TagServiceInterface;
 
 class TagController extends Controller
 {
-     /**
+    /**
      * @var TagServiceInterface
      */
     protected $tagService;

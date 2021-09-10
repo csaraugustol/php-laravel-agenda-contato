@@ -25,9 +25,9 @@ class BaseServiceParams
             // senão o valor será nulo
             $this->{$parameter->getName()} = isset($args[$parameter->getPosition()])
                 ? $args[$parameter->getPosition()]
-                : ( $parameter->isDefaultValueAvailable()
+                : ($parameter->isDefaultValueAvailable()
                     ? $parameter->getDefaultValue()
-                    : null );
+                    : null);
         }
     }
 
