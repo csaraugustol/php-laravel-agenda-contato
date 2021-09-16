@@ -6,11 +6,11 @@ use App\Contato;
 use App\Endereco;
 use App\Telefone;
 use Illuminate\Http\Request;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\Contacts\StoreRequest;
 use App\Services\Contracts\ContatoServiceInterface;
-use App\Services\Params\Contacts\CreateContactServiceParams;
+use App\Services\Params\Contacts\CreateCompleteContactsServiceParams;
 
 class ContatoController extends Controller
 {
@@ -33,7 +33,8 @@ class ContatoController extends Controller
 
     public function index(Request $request)
     {
-        $findContactsResponse = $this->contatoService->filterSearch(Auth::user()->id, $request->btnBusca);
+        $findContactsResponse = $this->contatoService
+            ->filterSearch(Auth::user()->id, $request->btnBusca);
 
         if (!$findContactsResponse->success) {
             return back()->with('msgErro', $findContactsResponse->message);
@@ -59,67 +60,32 @@ class ContatoController extends Controller
      *
      * @param StoreRequest $request
      *
-     * @return JsonResponse
+     * @return RedirectResponse
      */
-    public function store(StoreRequest $request): JsonResponse
+    public function store(StoreRequest $request): RedirectResponse
     {
-        //$array_tags = explode(',', $request->tags);
+        $tags = explode(',', $request->tags);
 
-        $params = new CreateContactServiceParams(
+        $completeContactParams = new CreateCompleteContactsServiceParams(
+            Auth::user()->id,
             $request->nome,
-            Auth::user()->id
+            $request->telefones,
+            $request->enderecos,
+            $tags
         );
 
-        $storeContactsResponse = $this->contatoService->store($params);
+        $storeCompleteContactResponse = $this->contatoService
+            ->storeCompleteContacts($completeContactParams);
 
-        if (!$storeContactsResponse->success || is_null($storeContactsResponse->data)) {
-            return $this->errorResponseFromService($storeContactsResponse);
+        if (!$storeCompleteContactResponse->success) {
+            return back()
+                ->withInput()
+                ->with('msgErro', $storeCompleteContactResponse->message);
         }
 
-        /* return $this->response(new DefaultResponse(
-                new UserResource($storeContactsResponse->data)
-            ));*/
-
-        if (
-            $request->nome == null || $request->telefone[0] == null || $request->tags[0] == null
-        ) {
-
-            return back()->withInput()->with('msgErro', 'Preencha todos os campos!');
-        } else {
-
-            //Salva dados básicos do contato
-            $c = new Contato();
-            $c->nome = $request->nome;
-            $c->user_id = Auth::user()->id;
-
-            $c->save();
-
-            //Salva array de tags
-
-
-            //Salva array de telefone
-            for ($i = 0; $i < count($request->telefone); $i++) {
-                $this->tel = new Telefone();
-                $this->tel->telefone = $request->telefone[$i];
-                $this->tel->contato_id = $c->id;
-                $this->tel->save();
-            }
-
-            //Salva array de endereços
-            for ($i = 0; $i < count($request->cep); $i++) {
-                $this->end = new Endereco();
-                $this->end->cep = $request->cep[$i];
-                $this->end->endereco = $request->endereco[$i];
-                $this->end->bairro = $request->bairro[$i];
-                $this->end->cidade = $request->cidade[$i];
-                $this->end->uf = $request->uf[$i];
-                $this->end->numero = $request->numero[$i];
-                $this->end->contato_id = $c->id;
-                $this->end->save();
-            }
-
-            return redirect("/contato")->with('msgSuc', 'Cadastrado realizado com sucesso!')->withInput();
-        }
+        return redirect("/contato")
+            ->with('msgSuc', 'Cadastrado realizado com sucesso!')
+            ->withInput();
     }
 
     /**
@@ -150,7 +116,12 @@ class ContatoController extends Controller
 
         $endereco = Endereco::where("contato_id", $id)->get();
 
-        return view('contato.edit', ['contato' => $contato, 'tel' => $tel, 'endereco' => $endereco, 'primeiroTel' => $primeiroTel]);
+        return view('contato.edit', [
+            'contato'     => $contato,
+            'tel'         => $tel,
+            'endereco'    => $endereco,
+            'primeiroTel' => $primeiroTel
+        ]);
     }
 
     /**
@@ -162,10 +133,7 @@ class ContatoController extends Controller
      */
     public function update(Request $request, int $id)
     {
-
-
-        $user_id = Auth::user()->id;
-
+        $userId = Auth::user()->id;
 
         if (
             $request->cep == null || $request->endereco == null || $request->bairro == null || $request->cidade == null ||
@@ -181,7 +149,7 @@ class ContatoController extends Controller
 
         $c = Contato::findOrFail($id);
         $c->nome = $request->nome;
-        $c->user_id = Auth::user()->id;
+        $c->userId = Auth::user()->id;
         $c->save();
 
         $c->telefones()->delete();
@@ -194,8 +162,6 @@ class ContatoController extends Controller
 
             $this->tel->save();
         }
-
-
 
         for ($i = 0; $i < count($request->cep); $i++) {
             $this->end = new Endereco();

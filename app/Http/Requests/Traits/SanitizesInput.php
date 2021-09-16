@@ -52,7 +52,6 @@ trait SanitizesInput
     public function sanitize($filters)
     {
         $filters = Arr::only($filters, array_keys($this->input()));
-
         $this->sanitizer = Sanitizer::make($this->input(), $filters);
 
         // Codigo para manter apenas os inputs pré existentes na request passados

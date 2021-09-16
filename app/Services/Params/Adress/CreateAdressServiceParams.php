@@ -20,13 +20,13 @@ class CreateAdressServiceParams extends BaseServiceParams
     /**
      * Argumento necessários para criação do endereço
      *
-     * @param string $cep
-     * @param string $endereco
-     * @param string $cidade
-     * @param string $district
-     * @param string $numero
-     * @param string $uf
-     * @param int    $contato_id
+     * @param string      $cep
+     * @param string      $endereco
+     * @param string      $cidade
+     * @param string      $district
+     * @param string      $numero
+     * @param string      $uf
+     * @param int|null    $contato_id
      */
     public function __construct(
         string $cep,
@@ -35,7 +35,7 @@ class CreateAdressServiceParams extends BaseServiceParams
         string $bairro,
         string $numero,
         string $uf,
-        int $contato_id
+        ?int $contato_id
     ) {
         parent::__construct();
     }
