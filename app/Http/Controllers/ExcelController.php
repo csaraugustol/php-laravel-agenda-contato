@@ -9,8 +9,6 @@ class ExcelController extends Controller
 {
     public function export()
     {
-        $contatosExcel =  ContatosExport::findAllContactsUser();
-
-        return   Excel::download(new ContatosExport, 'contatos.xlsx');
+        return Excel::download(new ContatosExport(), 'contatos.xlsx');
     }
 }

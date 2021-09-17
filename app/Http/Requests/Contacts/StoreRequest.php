@@ -28,15 +28,10 @@ class StoreRequest extends FormRequest
     {
         return [
             'after' => [
-                'nome'                  => 'cast:string',
-                'tags'                  => 'cast:string',
-                'telefone'              => 'cast:string',
-                'cep'                   => 'cast:string',
-                'endereco'              => 'cast:string',
-                'bairro'                => 'cast:string',
-                'cidade'                => 'cast:string',
-                'uf'                    => 'cast:string',
-                'numero'                => 'cast:string',
+                'nome'      => 'cast:string|trim_null',
+                'tags'      => 'cast:string|trim_null',
+                'telefones' => 'cast:array',
+                'enderecos' => 'cast:array',
             ],
         ];
     }
@@ -49,15 +44,17 @@ class StoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'nome'         => 'required|string|unique:contatos,nome',
-            'tags'         => 'required|string',
-            'telefone'     => 'required|string',
-            'cep'          => 'required|string|max:9',
-            'endereco'     => 'required|string',
-            'bairro'       => 'required|string',
-            'cidade'       => 'required|string',
-            'uf'           => 'required|string|max:2',
-            'numero'       => 'required|string',
+            'nome'                 => 'required|string',
+            'tags'                 => 'required|string',
+            'telefones'            => 'required|array|min:1',
+            'enderecos'            => 'required|array|min:1',
+            'enderecos.*.cep'      => 'required|max:9',
+            'enderecos.*.endereco' => 'required|string',
+            'enderecos.*.bairro'   => 'required|string',
+            'enderecos.*.cidade'   => 'required|string',
+            'enderecos.*.numero'   => 'required|numeric',
+            'enderecos.*.uf'       => 'required|string|max:2',
+
         ];
     }
 
@@ -69,27 +66,31 @@ class StoreRequest extends FormRequest
     public function messages()
     {
         return [
-            'nome.required'               => __('contacts/store.nome_required'),
-            'nome.string'                 => __('contacts/store.nome_string'),
-            'nome.unique'                 => __('contacts/store.nome_unique'),
-            'tags.required'               => __('contacts/store.tags_required'),
-            'tags.string'                 => __('contacts/store.tags_string'),
-            'telefones.required'          => __('contacts/store.telefones_required'),
-            'telefones.string'            => __('contacts/store.telefones_string'),
-            'cep.required'                => __('contacts/store.cep_required'),
-            'cep.string'                  => __('contacts/store.cep_string'),
-            'cep.max'                     => __('contacts/store.cep_max'),
-            'endereco.required'           => __('contacts/store.endereco_required'),
-            'endereco.string'             => __('contacts/store.endereco_string'),
-            'bairro.required'             => __('contacts/store.bairro_required'),
-            'bairro.string'               => __('contacts/store.bairro_string'),
-            'cidade.required'             => __('contacts/store.cidade_required'),
-            'cidade.string'               => __('contacts/store.cidade_string'),
-            'uf.required'                 => __('contacts/store.uf_required'),
-            'uf.string'                   => __('contacts/store.uf_string'),
-            'uf.max'                      => __('contacts/store.uf_max'),
-            'numero.string'               => __('contacts/store.numero_string'),
-            'numero.required'             => __('contacts/store.numero_required'),
+            'nome.required'                 => 'O campo "Nome" é obrigatório ser informado',
+            'nome.string'                   => 'O campo "Nome" deve ser do tipo string',
+            'tags.required'                 => 'O campo "Tags" é obrigatório ser informado',
+            'tags.string'                   => 'O campo "Tags" deve ser do tipo string',
+            'telefones.required'            => 'O campo "Telefone" é obrigatório ser informado',
+            'telefones.string'              => 'O campo "Telefone" deve ser do tipo string',
+            'telefones.array'               => 'O campo "Telefone" deve conter pelo menos um valor',
+            'telefones.min'                 => 'Informe ao menos um telefone',
+            'enderecos.required'            => 'Preencha os campos de "Endereço"',
+            'enderecos.array'               => 'O campo "Endereço" deve conter pelo menos um valor',
+            'enderecos.min'                 => 'Informe ao menos um endereço',
+            'enderecos.*.cep.required'      => 'O campo "CEP" é obrigatório ser informado',
+            'enderecos.*.cep.numeric'       => 'O campo "CEP" deve ser do tipo numérico',
+            'enderecos.*.cep.max'           => 'O campo "CEP" deve ter no máximo 9 caracteres',
+            'enderecos.*.endereco.required' => 'O campo "Logradouro" é obrigatório ser informado',
+            'enderecos.*.endereco.string'   => 'O campo "Logradouro" deve ser do tipo string',
+            'enderecos.*.bairro.required'   => 'O campo "Bairro" é obrigatório ser informado',
+            'enderecos.*.bairro.string'     => 'O campo "Bairro" deve ser do tipo string',
+            'enderecos.*.cidade.required'   => 'O campo "Cidade" é obrigatório ser informado',
+            'enderecos.*.cidade.string'     => 'O campo "Cidade" deve ser do tipo string',
+            'enderecos.*.numero.required'   => 'O campo "Número" é obrigatório ser informado',
+            'enderecos.*.numero.numeric'    => 'O campo "Número" deve ser do tipo numérico',
+            'enderecos.*.uf.required'       => 'O campo "UF" é obrigatório ser informado',
+            'enderecos.*.uf.string'         => 'O campo "UF" deve ser do tipo string',
+            'enderecos.*.uf.max'            => 'O campo "UF" deve ter no máximo 2 caracteres',
         ];
     }
 }

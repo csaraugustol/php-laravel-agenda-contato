@@ -15,12 +15,12 @@ class CreateTagServiceParams extends BaseServiceParams
     /**
      * Argumento necessários para criação da tag
      *
-     * @param string $tag
-     * @param int    $contato_id
+     * @param string      $tag
+     * @param int|null    $contato_id
      */
     public function __construct(
         string $tag,
-        int $contato_id
+        ?int $contato_id
     ) {
         parent::__construct();
     }

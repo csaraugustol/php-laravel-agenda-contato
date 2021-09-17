@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\User;
-
 use Illuminate\Http\Request;
 use App\Services\Contracts\UsuarioServiceInterface;
 
@@ -49,16 +48,14 @@ class UsuarioController extends Controller
     {
         if (empty($request->nome) or empty($request->email) or empty($request->senha)) {
             return back()->withInput()->with('msgErro', 'Preencha todos os campos!');
-        } else {
-
-            $u = new User();
-            $u->name = $request->nome;
-            $u->email = $request->email;
-            $u->password = bcrypt($request->senha);
-            $u->save();
+        }
+            $user = new User();
+            $user->name = $request->nome;
+            $user->email = $request->email;
+            $user->password = bcrypt($request->senha);
+            $user->save();
 
             return redirect("/usuario")->with('msgSuc', 'Cadastrado realizado com sucesso!')->withInput();
-        }
     }
 
     /**

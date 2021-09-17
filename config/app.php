@@ -25,7 +25,7 @@ return [
     | services your application utilizes. Set this in your ".env" file.
     |
     */
-    
+
     'env' => env('APP_ENV', 'production'),
 
     /*
@@ -163,6 +163,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\RepositoryServiceProvider::class,
         App\Providers\ServiceServiceProvider::class,
+        App\Providers\CustomFilterServiceProvider::class,
     ],
 
     /*

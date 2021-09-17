@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>@yield('title')</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -88,7 +89,7 @@
                 addOnBlur: !0,
                 maxTags: void 0,
                 maxChars: void 0,
-                confirmKeys: [32, 44],
+                confirmKeys: [13, 44],
                 delimiter: ",",
                 delimiterRegex: null,
                 cancelConfirmKeysOnEmpty: !0,
@@ -198,9 +199,9 @@
                             g = b.options.itemText(d),
                             h = b.options.tagClass(d);
                         if (c.attr("class", null), c.addClass("tag " + e(h)), c.contents().filter(
-                        function() {
-                                return 3 == this.nodeType
-                            })[0].nodeValue = e(g), b.isSelect) {
+                                function() {
+                                    return 3 == this.nodeType
+                                })[0].nodeValue = e(g), b.isSelect) {
                             var i = a("option", b.$element).filter(function() {
                                 return a(this).data("item") === d
                             });
@@ -243,7 +244,7 @@
                             },
                             matcher: function(a) {
                                 return -1 !== a.toLowerCase().indexOf(this.query.trim()
-                                .toLowerCase())
+                                    .toLowerCase())
                             },
                             sorter: function(a) {
                                 return a.sort()
@@ -347,7 +348,7 @@
                         } else f.push(g);
                     else g = new b(this, c), a(this).data("tagsinput", g), f.push(g), "SELECT" === this
                         .tagName && a("option", a(this)).attr("selected", "selected"), a(this).val(a(this)
-                        .val())
+                            .val())
                 }), "string" == typeof c ? f.length > 1 ? f : f[0] : f
             }, a.fn.tagsinput.Constructor = b;
             var i = a("<div />");
@@ -479,24 +480,30 @@
     <script>
         $("#novoTel").click(function() {
             $("#eventoNovoTel").append(
-                '<div class="col-lg-6 col-md-6 col-sm-6 mt-2 input-group form-group remove-dados"><div class="input-group-prepend"><button class="btn btn-danger remove" type="button">-</button></div><input type="text" class="form-control" required placeholder="Telefone" id="" name="telefone[]" /></div>'
+                '<div class="col-lg-6 col-md-6 col-sm-6 mt-2 input-group form-group remove-dados"><div class="input-group-prepend"><button class="btn btn-danger remove" type="button">-</button></div><input type="text" class="form-control" placeholder="Telefone" id="" name="telefones[]" /></div>'
             );
         });
-        var cont = 1;
+        var cont = 2;
         $("#novoEnd").click(function() {
             cont++;
             $("#eventoNovoEnd").append(
-                '<div class="remove-dados"><div class="row form-group"><div class="col-lg-3 col-sm-3 mt-2"><input type="text" class="form-control" placeholder="CEP" name="cep[]" id="cep' +
+                '<div class="remove-dados"><div class="row form-group"><div class="col-lg-3 col-sm-3 mt-2"><input type="text" class="form-control" placeholder="CEP" name="enderecos[' +
+                cont + '][cep]" id="cep' +
                 cont + '" onblur="getDadosEndPorCEP2(' + cont + ')" /></div>' +
-                '<div class="col-lg-6 col-sm-6 mt-2"><input type="text" class="form-control" placeholder="Endereço"  name="endereco[]" id="endereco' +
+                '<div class="col-lg-6 col-sm-6 mt-2"><input type="text" class="form-control" placeholder="Endereço"  name="enderecos[' +
+                cont + '][endereco]" id="endereco' +
                 cont + '" /></div>' +
-                '<div class="col-lg-3 col-sm-3 mt-2"><input type="text" class="form-control" placeholder="Bairro" name="bairro[]" id="bairro' +
+                '<div class="col-lg-3 col-sm-3 mt-2"><input type="text" class="form-control" placeholder="Bairro" name="enderecos[' +
+                cont + '][bairro]" id="bairro' +
                 cont + '" /></div></div>' +
-                '<div class="row form-group"><div class="col-lg-3 col-md-3 col-sm-3 mt-2"><input type="text" class="form-control" placeholder="Cidade" name="cidade[]" id="cidade' +
+                '<div class="row form-group"><div class="col-lg-3 col-md-3 col-sm-3 mt-2"><input type="text" class="form-control" placeholder="Cidade" name="enderecos[' +
+                cont + '][cidade]" id="cidade' +
                 cont + '" /></div>' +
-                '<div class="col-lg-3 col-md-3 col-sm-3 mt-2"><input type="text" class="form-control" placeholder="UF" name="uf[]" id="uf' +
+                '<div class="col-lg-3 col-md-3 col-sm-3 mt-2"><input type="text" class="form-control" placeholder="UF" name="enderecos[' +
+                cont + '][uf]" id="uf' +
                 cont + '" /></div>' +
-                '<div class="col-lg-3 col-md-3 col-sm-3 mt-2"> <input type="text" class="form-control" placeholder="Número" name="numero[]" id="numero' +
+                '<div class="col-lg-3 col-md-3 col-sm-3 mt-2"> <input type="text" class="form-control" placeholder="Número" name="enderecos[' +
+                cont + '][numero]" id="numero' +
                 cont + '" /></div>' +
                 '<div class="col-lg-3 col-md-3 col-sm-3 mt-2"><button class="btn btn-danger remove w-100" type="button">Remover</button></div></div><hr class="bg-secondary"></div>'
             );
@@ -507,25 +514,6 @@
         });
     </script>
     <script>
-        function getDadosEndPorCEP() {
-            let cep = document.getElementById('cep').value;
-            let url = 'https://viacep.com.br/ws/' + cep + '/json/unicode/';
-            console.log(url);
-            let xmlHttp = new XMLHttpRequest();
-            xmlHttp.open('GET', url)
-            xmlHttp.onreadystatechange = () => {
-                if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
-                    let dadosJsonText = xmlHttp.responseText;
-                    let dadosJsonObj = JSON.parse(dadosJsonText);
-                    document.getElementById('endereco').value = dadosJsonObj.logradouro;
-                    document.getElementById('bairro').value = dadosJsonObj.bairro;
-                    document.getElementById('cidade').value = dadosJsonObj.localidade;
-                    document.getElementById('uf').value = dadosJsonObj.uf;
-                }
-            }
-            xmlHttp.send()
-        }
-
         function getDadosEndPorCEP2(int) {
             let cep = document.getElementById('cep' + int).value;
             let url = 'https://viacep.com.br/ws/' + cep + '/json/unicode/';
@@ -546,4 +534,5 @@
         }
     </script>
 </body>
+
 </html>
