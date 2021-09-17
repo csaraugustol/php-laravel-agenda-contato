@@ -30,11 +30,11 @@ class ContatosExport implements FromCollection
      */
     public static function findAllContactsUser()
     {
-        $c = Contato::with('telefones', 'enderecos')
+        $findAllContacUser = Contato::with('telefones', 'enderecos')
             ->where("user_id", Auth::user()->id)
             ->orderBy('nome', 'asc')
             ->get();
 
-        return $c;
+        return $findAllContacUser;
     }
 }
